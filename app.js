@@ -150,7 +150,7 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
   t && t.addEventListener('click', () => {
     d = d === 'dark' ? 'light' : 'dark';
     r.setAttribute('data-theme', d);
-    try { localStorage.setItem('lb-theme', d); } catch(e){}
+
     updateIcon();
   });
 })();

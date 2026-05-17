@@ -13,7 +13,7 @@
   <script>
     (function () {
       var r = document.documentElement;
-      var d = localStorage.getItem('lb-theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+      var d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
       r.setAttribute('data-theme', d);
     })();
   </script>
