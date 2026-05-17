@@ -86,22 +86,6 @@ const PROJECTS = [
     ]
   },
   {
-    id: 'wishlist-collection',
-    name: 'wishlist-collection',
-    category: 'trackers',
-    categoryLabel: 'Tracker',
-    description: 'Private wishlist and collection tracker. Keep tabs on what you want, what you have, and what\'s next.',
-    github: 'https://github.com/littlebeansf/wishlist-collection',
-    language: 'TypeScript',
-    isPrivate: true,
-    updated: '2026-05-17',
-    highlights: [
-      'Private repository',
-      'Wishlist + owned collection management',
-      'Same stack as CardVault'
-    ]
-  },
-  {
     id: 'stringcraft',
     name: 'stringcraft',
     category: 'tools',
