@@ -133,6 +133,24 @@ const PROJECTS = [
     ]
   },
   {
+    id: 'rhe-3d',
+    name: 'rhe-3d',
+    category: 'tools',
+    categoryLabel: 'Tool',
+    description: 'Convert images to 3D-printable objects. Upload PNG/JPG/WebP/SVG, edit, and export to STL, 3MF, OBJ, or GLB.',
+    github: 'https://github.com/littlebeansf/rhe-3d',
+    pages: 'https://littlebeansf.github.io/rhe-3d/',
+    image: 'img/rhe-3d.png',
+    language: 'TypeScript',
+    isPrivate: false,
+    updated: '2026-05-18',
+    highlights: [
+      'Image to 3D mesh conversion',
+      'Export to STL, 3MF, OBJ, GLB',
+      'In-browser editor, no install needed'
+    ]
+  },
+  {
     id: 'hard-techno-dj-academy',
     name: 'hard-techno-dj-academy',
     category: 'tools',
