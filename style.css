@@ -182,6 +182,7 @@ p, li { text-wrap: pretty; }
   height: 52px;
   display: flex;
   align-items: center;
+  gap: var(--space-2);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: 0.08em;
@@ -190,12 +191,17 @@ p, li { text-wrap: pretty; }
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
   transition: all var(--transition);
+  white-space: nowrap;
 }
 .nav-btn:hover { color: var(--color-text); }
 .nav-btn.active {
   color: var(--color-text);
   border-bottom-color: var(--color-text);
 }
+.nav-icon { flex-shrink: 0; }
+/* On desktop: icon hidden, label shown */
+.nav-icon { display: none; }
+.nav-label { display: inline; }
 .bmc-btn {
   display: flex;
   align-items: center;
@@ -1298,6 +1304,17 @@ p, li { text-wrap: pretty; }
 .contact-card:hover .contact-arrow { color: var(--color-text); }
 
 /* ===== RESPONSIVE ===== */
+
+/* Tablet & mobile nav: show icons, hide text labels */
+@media (max-width: 860px) {
+  .nav-icon  { display: block; }
+  .nav-label { display: none; }
+  .nav-btn   { padding: 0 var(--space-3); }
+  /* Also shrink BMC button text on tablet */
+  .bmc-btn span { display: none; }
+  .bmc-btn { padding: 6px 10px; }
+}
+
 @media (max-width: 768px) {
   .tile-row { grid-template-columns: repeat(2, 1fr); }
   .tile-card { min-height: 180px; }

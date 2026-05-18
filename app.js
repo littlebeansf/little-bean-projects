@@ -43,10 +43,10 @@ const PROJECTS = [
   },
   {
     id: 'dealer-life-simulator',
-    name: 'dealer-life-simulator',
+    name: 'The Goblin\'s Deal',
     category: 'games',
     categoryLabel: 'Game',
-    description: 'A life simulator — navigate choices, build a story, and see where your decisions take you. Full TypeScript simulation loop.',
+    description: 'A shady goblin dealer offers you a hand. Navigate choices, gamble your fate, and see where your decisions take you in this fantasy life sim.',
     github: 'https://github.com/littlebeansf/dealer-life-simulator',
     pages: 'https://littlebeansf.github.io/dealer-life-simulator/',
     image: 'img/dealer-life-simulator.png',
