@@ -66,7 +66,7 @@ const PROJECTS = [
     categoryLabel: 'Game',
     description: 'The hilariously accurate office IT idle clicker game. Resolve tickets, upgrade your setup, and survive the help desk.',
     github: 'https://github.com/littlebeansf/it-clicker',
-    pages: 'https://sebastianfries.github.io/it-clicker',
+    pages: 'https://littlebeansf.github.io/it-clicker/',
     image: 'img/it-clicker.png',
     language: 'HTML',
     isPrivate: false,
