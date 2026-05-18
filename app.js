@@ -133,6 +133,24 @@ const PROJECTS = [
     ]
   },
   {
+    id: 'hard-techno-dj-academy',
+    name: 'hard-techno-dj-academy',
+    category: 'tools',
+    categoryLabel: 'Tool',
+    description: 'Interactive Hard Techno DJ Learning App — learn genres, practice mixing, compose beats.',
+    github: 'https://github.com/littlebeansf/hard-techno-dj-academy',
+    pages: 'https://littlebeansf.github.io/hard-techno-dj-academy/',
+    image: 'img/hard-techno-dj-academy.png',
+    language: 'TypeScript',
+    isPrivate: false,
+    updated: '2026-05-18',
+    highlights: [
+      'Genre map & learning modules',
+      'Mixing practice mode',
+      'Beat composition tools'
+    ]
+  },
+  {
     id: 'stringcraft',
     name: 'stringcraft',
     category: 'tools',
