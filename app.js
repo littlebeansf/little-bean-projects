@@ -318,3 +318,150 @@ function onEsc(e) { if (e.key === 'Escape') closeModal(); }
 
 /* ===== INIT ===== */
 renderProjects('all');
+
+/* ===== MUSIC PLAYER ===== */
+const PLAYLIST = [
+  { id: '6e00b6da-b35b-4c25-865a-e2f11a0d61da', title: 'WITCH AT 190bpm',   audio: 'https://cdn1.suno.ai/6e00b6da-b35b-4c25-865a-e2f11a0d61da.mp3',   image: 'https://cdn2.suno.ai/video_gen_3b16377b-4ed5-410e-b051-5ec544e6a189_video_upload_3b16377b-4ed5-410e-b051-5ec544e6a189_cover_snapshot_0s_1766162536_image.jpeg',  tags: '190 BPM · Hard Techno' },
+  { id: '806b65e1-c3f9-41a9-8b60-ad89e25e9f2b', title: 'INFECTED VIKINGS',  audio: 'https://cdn1.suno.ai/806b65e1-c3f9-41a9-8b60-ad89e25e9f2b.mp3',   image: 'https://cdn2.suno.ai/video_gen_dd925aec-22d0-4911-989c-99f8339231e4_video_upload_dd925aec-22d0-4911-989c-99f8339231e4_cover_snapshot_0s_1766164242_image.jpeg',  tags: '185 BPM · Hard Techno' },
+  { id: '4900c72f-5798-4f0e-bf99-6bca2a533dd6', title: 'RUDRA | रुद्र',     audio: 'https://cdn1.suno.ai/4900c72f-5798-4f0e-bf99-6bca2a533dd6.mp3',   image: 'https://cdn2.suno.ai/video_gen_0f1cbd29-9f04-49d8-9541-44c78861d0fe_video_upload_0f1cbd29-9f04-49d8-9541-44c78861d0fe_cover_snapshot_0s_1766172908_image.jpeg',  tags: '165 BPM · Techno / Goa' },
+  { id: '7cd1ce74-598e-473d-a3ac-4c3194fd4b5c', title: 'YOKA-O-NI',         audio: 'https://cdn1.suno.ai/7cd1ce74-598e-473d-a3ac-4c3194fd4b5c.mp3',   image: 'https://cdn2.suno.ai/video_gen_c2424c8d-d573-4b49-a5bd-ef1391613414_video_upload_c2424c8d-d573-4b49-a5bd-ef1391613414_cover_snapshot_0s_1768292841_image.jpeg',  tags: '190 BPM · Hard Techno' },
+  { id: 'f841a16b-0595-44c3-81ea-970b78a20e3e', title: 'YODEL MTFUCKER',    audio: 'https://cdn1.suno.ai/f841a16b-0595-44c3-81ea-970b78a20e3e.mp3',   image: 'https://cdn2.suno.ai/52d0d91f-ff03-4787-b1fa-e0814383ff41.jpeg',                                                                                                       tags: '190 BPM · Swiss Yodel Techno' },
+  { id: '3481ad98-3f21-4801-bab9-96b03859a07a', title: 'DRUNK COBOLT',      audio: 'https://cdn1.suno.ai/3481ad98-3f21-4801-bab9-96b03859a07a.mp3',   image: 'https://cdn2.suno.ai/35410c24-546e-49f6-bc82-458c3de9df0d.jpeg',                                                                                                       tags: '190 BPM · Hard Techno' },
+  { id: '746ee5e9-1123-40b0-b0e0-f3f920f3f0b1', title: 'LAS PATRZY',        audio: 'https://cdn1.suno.ai/746ee5e9-1123-40b0-b0e0-f3f920f3f0b1.mp3',   image: 'https://cdn2.suno.ai/c135419a-07ad-487d-a68d-5e9730cf7414.jpeg',                                                                                                       tags: '160–190 BPM · Ritual Hard Techno' },
+  { id: '1d0ae377-67da-44b8-b9b9-bfb808af1e16', title: 'LAS PATRZY pt. 2',  audio: 'https://cdn1.suno.ai/1d0ae377-67da-44b8-b9b9-bfb808af1e16.mp3',   image: 'https://cdn2.suno.ai/7c5b7585-f6d5-45c6-b178-827bcabeb36d.jpeg',                                                                                                       tags: '160–190 BPM · Ritual Hard Techno' },
+  { id: '26fbe641-327c-4893-ba93-52d9780b4bb3', title: 'ACID',              audio: 'https://cdn1.suno.ai/26fbe641-327c-4893-ba93-52d9780b4bb3.mp3',   image: 'https://cdn2.suno.ai/video_gen_63895c7e-a50b-47cd-bd81-532e38ab769d_video_upload_63895c7e-a50b-47cd-bd81-532e38ab769d_cover_snapshot_0s_1767953081_image.jpeg',  tags: '175–185 BPM · Hard Techno' },
+  { id: '65f1c753-b5cf-40a6-a9b3-e5d982667546', title: 'WAIFU',             audio: 'https://cdn1.suno.ai/65f1c753-b5cf-40a6-a9b3-e5d982667546.mp3',   image: 'https://cdn2.suno.ai/video_gen_5504624f-09eb-477c-8b24-577960478013_video_upload_5504624f-09eb-477c-8b24-577960478013_cover_snapshot_0s_1767960829_image.jpeg',  tags: '155–165 BPM · Hard Techno' },
+  { id: 'e80d88a9-d916-408a-82a2-3e5ec67ed5ed', title: 'HORNY WAIFU',       audio: 'https://cdn1.suno.ai/e80d88a9-d916-408a-82a2-3e5ec67ed5ed.mp3',   image: 'https://cdn2.suno.ai/video_gen_26d1afe4-3f65-44d5-8c42-8b1bef2a2ec8_video_upload_26d1afe4-3f65-44d5-8c42-8b1bef2a2ec8_cover_snapshot_0s_1768247473_image.jpeg',  tags: '155–165 BPM · Hard Techno' },
+];
+
+let currentTrack = 0;
+let shuffleMode  = false;
+let playOrder    = PLAYLIST.map((_, i) => i);
+
+const audio    = document.getElementById('audio-player');
+const btnPlay  = document.getElementById('btn-play');
+const btnPrev  = document.getElementById('btn-prev');
+const btnNext  = document.getElementById('btn-next');
+const btnShuffle = document.getElementById('btn-shuffle');
+const barFill  = document.getElementById('player-bar-fill');
+const barTrack = document.getElementById('player-bar-track');
+const elCurrent= document.getElementById('player-current');
+const elDur    = document.getElementById('player-duration');
+const elTitle  = document.getElementById('player-title');
+const elCover  = document.getElementById('player-cover');
+const volSlider= document.getElementById('player-vol');
+const tracklist= document.getElementById('tracklist');
+
+function fmtTime(s) {
+  if (!isFinite(s)) return '0:00';
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return m + ':' + String(sec).padStart(2, '0');
+}
+
+function buildTracklist() {
+  if (!tracklist) return;
+  tracklist.innerHTML = PLAYLIST.map((t, i) => `
+    <div class="track-row" id="tr-${i}" onclick="loadTrack(${i}, true)">
+      <div class="track-num">${String(i + 1).padStart(2, '0')}</div>
+      <div class="track-cover" style="background-image:url('${t.image}')"></div>
+      <div class="track-info">
+        <span class="track-title">${t.title}</span>
+        <span class="track-tags">${t.tags}</span>
+      </div>
+      <div class="track-playing" id="tp-${i}"><span></span><span></span><span></span></div>
+    </div>
+  `).join('');
+}
+
+function loadTrack(idx, autoplay) {
+  currentTrack = idx;
+  const t = PLAYLIST[idx];
+  audio.src = t.audio;
+  audio.volume = volSlider ? parseFloat(volSlider.value) : 0.8;
+  elTitle.textContent  = t.title;
+  elCover.style.backgroundImage = `url('${t.image}')`;
+  barFill.style.width  = '0%';
+  elCurrent.textContent = '0:00';
+  elDur.textContent    = '0:00';
+  // update tracklist highlight
+  document.querySelectorAll('.track-row').forEach((r, i) => r.classList.toggle('active', i === idx));
+  document.querySelectorAll('.track-playing').forEach((el, i) => el.classList.toggle('playing', i === idx));
+  if (autoplay) {
+    audio.play().then(() => setPlayUI(true)).catch(() => {});
+  }
+}
+
+function setPlayUI(playing) {
+  const iconPlay  = btnPlay.querySelector('.icon-play');
+  const iconPause = btnPlay.querySelector('.icon-pause');
+  if (playing) {
+    iconPlay.style.display  = 'none';
+    iconPause.style.display = '';
+  } else {
+    iconPlay.style.display  = '';
+    iconPause.style.display = 'none';
+  }
+  // sync track row animation
+  document.querySelectorAll('.track-playing').forEach((el, i) => el.classList.toggle('playing', i === currentTrack && playing));
+}
+
+function nextTrack() {
+  if (shuffleMode) {
+    currentTrack = Math.floor(Math.random() * PLAYLIST.length);
+  } else {
+    currentTrack = (currentTrack + 1) % PLAYLIST.length;
+  }
+  loadTrack(currentTrack, true);
+}
+
+function prevTrack() {
+  if (audio.currentTime > 3) { audio.currentTime = 0; return; }
+  currentTrack = (currentTrack - 1 + PLAYLIST.length) % PLAYLIST.length;
+  loadTrack(currentTrack, true);
+}
+
+if (btnPlay) {
+  btnPlay.addEventListener('click', () => {
+    if (!audio.src) { loadTrack(0, true); return; }
+    if (audio.paused) {
+      audio.play().then(() => setPlayUI(true)).catch(() => {});
+    } else {
+      audio.pause();
+      setPlayUI(false);
+    }
+  });
+}
+if (btnPrev)  btnPrev.addEventListener('click', prevTrack);
+if (btnNext)  btnNext.addEventListener('click', nextTrack);
+if (btnShuffle) {
+  btnShuffle.addEventListener('click', () => {
+    shuffleMode = !shuffleMode;
+    btnShuffle.classList.toggle('active', shuffleMode);
+  });
+}
+
+audio.addEventListener('timeupdate', () => {
+  if (!audio.duration) return;
+  const pct = (audio.currentTime / audio.duration) * 100;
+  barFill.style.width = pct + '%';
+  elCurrent.textContent = fmtTime(audio.currentTime);
+});
+audio.addEventListener('durationchange', () => { elDur.textContent = fmtTime(audio.duration); });
+audio.addEventListener('ended', nextTrack);
+audio.addEventListener('play',  () => setPlayUI(true));
+audio.addEventListener('pause', () => setPlayUI(false));
+
+if (barTrack) {
+  barTrack.addEventListener('click', (e) => {
+    if (!audio.duration) return;
+    const rect = barTrack.getBoundingClientRect();
+    audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+  });
+}
+if (volSlider) {
+  volSlider.addEventListener('input', () => { audio.volume = parseFloat(volSlider.value); });
+}
+
+buildTracklist();
+loadTrack(0, false);
