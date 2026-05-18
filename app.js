@@ -60,6 +60,24 @@ const PROJECTS = [
     ]
   },
   {
+    id: 'it-clicker',
+    name: 'it-clicker',
+    category: 'games',
+    categoryLabel: 'Game',
+    description: 'The hilariously accurate office IT idle clicker game. Resolve tickets, upgrade your setup, and survive the help desk.',
+    github: 'https://github.com/littlebeansf/it-clicker',
+    pages: 'https://sebastianfries.github.io/it-clicker',
+    image: 'img/it-clicker.png',
+    language: 'HTML',
+    isPrivate: false,
+    updated: '2026-05-18',
+    highlights: [
+      'Idle clicker mechanics',
+      'Office IT theme — tickets, upgrades, stress meter',
+      'Browser-native, no dependencies'
+    ]
+  },
+  {
     id: 'framestack',
     name: 'framestack',
     category: 'trackers',
