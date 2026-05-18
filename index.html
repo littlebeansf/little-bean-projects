@@ -587,6 +587,26 @@
       }
     })();
   </script>
+  <!-- Back to top button -->
+  <button id="back-to-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,8 6,3 10,8"/></svg>
+    <span class="btt-label">TOP</span>
+  </button>
+  <script>
+    (function(){
+      var btn = document.getElementById('back-to-top');
+      var threshold = 180;
+      function onScroll() {
+        btn.classList.toggle('visible', window.scrollY > threshold);
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+      btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+
   <!-- Bean face cursor -->
   <script src="bean-cursor.js"></script>
 
