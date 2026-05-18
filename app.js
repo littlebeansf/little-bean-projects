@@ -465,3 +465,65 @@ if (volSlider) {
 
 buildTracklist();
 loadTrack(0, false);
+
+/* Active album highlight on load */
+const defaultAlbum = document.querySelector('.album-card[data-playlist-id="7e22dab7-8293-47ae-9b5d-37594cd92576"]');
+if (defaultAlbum) defaultAlbum.classList.add('active');
+
+/* ===== ALBUM SWITCHING ===== */
+const ALBUM_TRACKS = {
+  '83ba60ba-2e48-44ec-a57d-6eed30f5ba49': [
+    { title: 'WITCH AT 190bpm',  audio: 'https://cdn1.suno.ai/6e00b6da-b35b-4c25-865a-e2f11a0d61da.mp3', image: 'https://cdn2.suno.ai/video_gen_3b16377b-4ed5-410e-b051-5ec544e6a189_video_upload_3b16377b-4ed5-410e-b051-5ec544e6a189_cover_snapshot_0s_1766162536_image.jpeg', tags: '190 BPM · Hard Techno' },
+    { title: 'INFECTED VIKINGS', audio: 'https://cdn1.suno.ai/806b65e1-c3f9-41a9-8b60-ad89e25e9f2b.mp3', image: 'https://cdn2.suno.ai/video_gen_dd925aec-22d0-4911-989c-99f8339231e4_video_upload_dd925aec-22d0-4911-989c-99f8339231e4_cover_snapshot_0s_1766164242_image.jpeg', tags: '185 BPM · Hard Techno' },
+    { title: 'RUDRA | रुद्र',    audio: 'https://cdn1.suno.ai/4900c72f-5798-4f0e-bf99-6bca2a533dd6.mp3', image: 'https://cdn2.suno.ai/video_gen_0f1cbd29-9f04-49d8-9541-44c78861d0fe_video_upload_0f1cbd29-9f04-49d8-9541-44c78861d0fe_cover_snapshot_0s_1766172908_image.jpeg', tags: '165 BPM · Techno / Goa' },
+    { title: 'YOKA-O-NI',        audio: 'https://cdn1.suno.ai/7cd1ce74-598e-473d-a3ac-4c3194fd4b5c.mp3', image: 'https://cdn2.suno.ai/video_gen_c2424c8d-d573-4b49-a5bd-ef1391613414_video_upload_c2424c8d-d573-4b49-a5bd-ef1391613414_cover_snapshot_0s_1768292841_image.jpeg', tags: '190 BPM · Hard Techno' },
+    { title: 'YODEL MTFUCKER',   audio: 'https://cdn1.suno.ai/f841a16b-0595-44c3-81ea-970b78a20e3e.mp3', image: 'https://cdn2.suno.ai/52d0d91f-ff03-4787-b1fa-e0814383ff41.jpeg', tags: '190 BPM · Swiss Yodel Techno' },
+    { title: 'DRUNK COBOLT',     audio: 'https://cdn1.suno.ai/3481ad98-3f21-4801-bab9-96b03859a07a.mp3', image: 'https://cdn2.suno.ai/35410c24-546e-49f6-bc82-458c3de9df0d.jpeg', tags: '190 BPM · Hard Techno' },
+    { title: 'LAS PATRZY',       audio: 'https://cdn1.suno.ai/746ee5e9-1123-40b0-b0e0-f3f920f3f0b1.mp3', image: 'https://cdn2.suno.ai/c135419a-07ad-487d-a68d-5e9730cf7414.jpeg', tags: '160–190 BPM · Ritual' },
+    { title: 'LAS PATRZY pt. 2', audio: 'https://cdn1.suno.ai/1d0ae377-67da-44b8-b9b9-bfb808af1e16.mp3', image: 'https://cdn2.suno.ai/7c5b7585-f6d5-45c6-b178-827bcabeb36d.jpeg', tags: '160–190 BPM · Ritual' },
+    { title: 'ACID',             audio: 'https://cdn1.suno.ai/26fbe641-327c-4893-ba93-52d9780b4bb3.mp3', image: 'https://cdn2.suno.ai/video_gen_63895c7e-a50b-47cd-bd81-532e38ab769d_video_upload_63895c7e-a50b-47cd-bd81-532e38ab769d_cover_snapshot_0s_1767953081_image.jpeg', tags: '175–185 BPM · Hard Techno' },
+  ],
+  '7e22dab7-8293-47ae-9b5d-37594cd92576': PLAYLIST,
+  'fafa162d-8a5c-4e6c-a578-451545e66f03': [
+    { title: 'life.zip — Track 1', audio: 'https://cdn1.suno.ai/26fbe641-327c-4893-ba93-52d9780b4bb3.mp3', image: 'https://cdn2.suno.ai/9c70c760.jpeg', tags: 'life.zip' },
+  ],
+  'ad2550a5-108b-409d-880a-94ceb287c513': [
+    { title: 'Ʀ೮೷3ઽ — Track 1', audio: 'https://cdn1.suno.ai/65f1c753-b5cf-40a6-a9b3-e5d982667546.mp3', image: 'https://cdn2.suno.ai/0cfdb893.jpeg', tags: 'Ʀ೮೷3ઽ' },
+  ],
+};
+
+async function fetchPlaylistTracks(playlistId) {
+  try {
+    const res = await fetch(`https://studio-api.prod.suno.com/api/playlist/${playlistId}?page=0`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return (data.playlist_clips || []).map(item => ({
+      title: item.clip.title || 'Untitled',
+      audio: item.clip.audio_url,
+      image: item.clip.image_url || '',
+      tags: (item.clip.metadata && item.clip.metadata.tags) ? item.clip.metadata.tags.split(',')[0] + ' BPM' : ''
+    }));
+  } catch(e) { return null; }
+}
+
+window.switchPlaylist = async function(playlistId, name, count) {
+  // Highlight active album
+  document.querySelectorAll('.album-card').forEach(c => c.classList.toggle('active', c.dataset.playlistId === playlistId));
+  // Update label
+  const label = document.getElementById('tracklist-label');
+  if (label) label.textContent = `// ${name.toUpperCase()} — PLAYLIST`;
+  // Stop current track
+  audio.pause();
+  setPlayUI(false);
+  // Try live fetch first, fall back to cached
+  let tracks = await fetchPlaylistTracks(playlistId);
+  if (!tracks || tracks.length === 0) tracks = ALBUM_TRACKS[playlistId] || PLAYLIST;
+  // Swap PLAYLIST array contents
+  PLAYLIST.length = 0;
+  tracks.forEach(t => PLAYLIST.push(t));
+  currentTrack = 0;
+  buildTracklist();
+  loadTrack(0, false);
+};
