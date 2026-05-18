@@ -78,6 +78,25 @@ const PROJECTS = [
     ]
   },
   {
+    id: 'sip-and-spill',
+    name: 'Sip & Spill',
+    category: 'games',
+    categoryLabel: 'Game',
+    description: 'A round-based drinking game for any two players — warm-up, spicy, and extreme zones with mini-games.',
+    github: 'https://github.com/littlebeansf/sip-and-spill',
+    pages: 'https://littlebeansf.github.io/sip-and-spill/',
+    image: 'img/sip-and-spill.png',
+    language: 'JavaScript',
+    isPrivate: false,
+    updated: '2026-05-18',
+    highlights: [
+      'Round-based drinking game',
+      'Warm-up, spicy & extreme zones',
+      'Mini-games built in',
+      'Two-player party fun'
+    ]
+  },
+  {
     id: 'framestack',
     name: 'framestack',
     category: 'trackers',
@@ -191,8 +210,8 @@ const PROJECTS = [
   {
     id: 'you-dont-have-to-use-your-brain',
     name: 'You Don\'t Have to Use Your Brain',
-    category: 'tools',
-    categoryLabel: 'Tool',
+    category: 'study',
+    categoryLabel: 'Study',
     description: 'A curated UI/UX learning library — Fitts\' Law, Hick\'s Law, Gestalt principles, and more. Don\'t make the user think.',
     github: 'https://github.com/littlebeansf/you-dont-have-to-use-your-brain',
     pages: 'https://littlebeansf.github.io/you-dont-have-to-use-your-brain/',
