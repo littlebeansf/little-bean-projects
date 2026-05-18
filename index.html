@@ -342,10 +342,10 @@
 
       <!-- Player panel -->
       <div class="player-panel">
-        <div class="player-cover" id="player-cover"></div>
+        <div class="player-cover" id="player-cover" style="background-image:url('https://cdn2.suno.ai/b9e3928d.jpeg')"></div>
         <div class="player-meta">
-          <div class="player-title" id="player-title">Select a track</div>
-          <div class="player-sub" id="player-sub">Madness.zip &mdash; @sfisnotdead</div>
+          <div class="player-title" id="player-title">WITCH AT 190bpm</div>
+          <div class="player-sub">Madness.zip &mdash; @sfisnotdead</div>
         </div>
         <div class="player-progress-wrap">
           <div class="player-time" id="player-current">0:00</div>
@@ -355,17 +355,17 @@
           <div class="player-time" id="player-duration">0:00</div>
         </div>
         <div class="player-controls">
-          <button class="player-btn" id="btn-prev" aria-label="Previous" title="Previous">
+          <button class="player-btn" id="btn-prev" aria-label="Previous">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
           </button>
           <button class="player-btn player-btn--play" id="btn-play" aria-label="Play/Pause">
             <svg class="icon-play" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             <svg class="icon-pause" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
           </button>
-          <button class="player-btn" id="btn-next" aria-label="Next" title="Next">
+          <button class="player-btn" id="btn-next" aria-label="Next">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zm2.5-6 5.5 3.9V8.1L8.5 12zM16 6h2v12h-2z"/></svg>
           </button>
-          <button class="player-btn player-btn--shuffle" id="btn-shuffle" aria-label="Shuffle" title="Shuffle">
+          <button class="player-btn player-btn--shuffle" id="btn-shuffle" aria-label="Shuffle">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
           </button>
         </div>
@@ -376,42 +376,53 @@
         <a href="https://suno.com/playlist/7e22dab7-8293-47ae-9b5d-37594cd92576" target="_blank" rel="noopener" class="player-ext-link">Open on Suno &nbsp;&nearr;</a>
       </div>
 
-      <!-- Track list -->
+      <!-- Right: profile + albums + tracklist -->
       <div class="music-right">
-        <!-- Albums -->
-        <div class="music-section-label">// ALBUMS &amp; PLAYLISTS</div>
-        <div class="album-grid" id="album-grid">
-          <div class="album-card" onclick="switchPlaylist('7e22dab7-8293-47ae-9b5d-37594cd92576','Madness.zip',11)" data-playlist-id="7e22dab7-8293-47ae-9b5d-37594cd92576">
+
+        <!-- Suno profile strip -->
+        <div class="suno-profile">
+          <div class="suno-avatar" style="background-image:url('https://cdn2.suno.ai/b9e3928d.jpeg')"></div>
+          <div class="suno-profile-body">
+            <span class="suno-handle">@sfisnotdead</span>
+            <span class="suno-tagline">Hard techno &amp; electronic &mdash; made in Switzerland</span>
+          </div>
+          <a href="https://suno.com/@sfisnotdead" target="_blank" rel="noopener" class="suno-profile-link">View Profile &nearr;</a>
+        </div>
+
+        <!-- Other albums (link to Suno) -->
+        <div class="music-section-label" style="margin-top:var(--space-8)">// ALBUMS</div>
+        <div class="album-grid">
+          <div class="album-card album-card--active">
             <div class="album-cover" style="background-image:url('https://cdn2.suno.ai/b9e3928d.jpeg')"></div>
             <div class="album-info">
               <span class="album-title">Madness.zip</span>
-              <span class="album-meta">11 tracks</span>
+              <span class="album-meta">11 tracks &mdash; playing</span>
             </div>
           </div>
-          <div class="album-card" onclick="switchPlaylist('83ba60ba-2e48-44ec-a57d-6eed30f5ba49','\u16B2\u16BA\u16A8\u16DF\u16CA',9)" data-playlist-id="83ba60ba-2e48-44ec-a57d-6eed30f5ba49">
+          <a href="https://suno.com/playlist/83ba60ba-2e48-44ec-a57d-6eed30f5ba49" target="_blank" rel="noopener" class="album-card">
             <div class="album-cover" style="background-image:url('https://cdn2.suno.ai/bcc3d98c.jpeg')"></div>
             <div class="album-info">
               <span class="album-title">&#x16B2;&#x16BA;&#x16A8;&#x16DF;&#x16CA;</span>
-              <span class="album-meta">9 tracks</span>
+              <span class="album-meta">9 tracks &nearr;</span>
             </div>
-          </div>
-          <div class="album-card" onclick="switchPlaylist('fafa162d-8a5c-4e6c-a578-451545e66f03','life.zip',5)" data-playlist-id="fafa162d-8a5c-4e6c-a578-451545e66f03">
+          </a>
+          <a href="https://suno.com/playlist/fafa162d-8a5c-4e6c-a578-451545e66f03" target="_blank" rel="noopener" class="album-card">
             <div class="album-cover" style="background-image:url('https://cdn2.suno.ai/9c70c760.jpeg')"></div>
             <div class="album-info">
               <span class="album-title">life.zip</span>
-              <span class="album-meta">5 tracks</span>
+              <span class="album-meta">5 tracks &nearr;</span>
             </div>
-          </div>
-          <div class="album-card" onclick="switchPlaylist('ad2550a5-108b-409d-880a-94ceb287c513','\u0052\u0CE8\u0CF73\u0AA5',8)" data-playlist-id="ad2550a5-108b-409d-880a-94ceb287c513">
+          </a>
+          <a href="https://suno.com/playlist/ad2550a5-108b-409d-880a-94ceb287c513" target="_blank" rel="noopener" class="album-card">
             <div class="album-cover" style="background-image:url('https://cdn2.suno.ai/0cfdb893.jpeg')"></div>
             <div class="album-info">
               <span class="album-title">&#x0052;&#x0CE8;&#x0CF7;3&#x0AA5;</span>
-              <span class="album-meta">8 tracks</span>
+              <span class="album-meta">8 tracks &nearr;</span>
             </div>
-          </div>
+          </a>
         </div>
 
-        <div class="music-section-label" style="margin-top:var(--space-8)" id="tracklist-label">// MADNESS.ZIP &mdash; PLAYLIST</div>
+        <div class="music-section-label" style="margin-top:var(--space-8)">// MADNESS.ZIP</div>
         <div class="tracklist" id="tracklist"></div>
       </div>
 
