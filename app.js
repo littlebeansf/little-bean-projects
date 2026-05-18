@@ -187,6 +187,26 @@ const PROJECTS = [
       'Image-to-string-art algorithm',
       'Export suite: PDF, SVG, print-ready'
     ]
+  },
+  {
+    id: 'you-dont-have-to-use-your-brain',
+    name: 'You Don\'t Have to Use Your Brain',
+    category: 'tools',
+    categoryLabel: 'Tool',
+    description: 'A curated UI/UX learning library — Fitts\' Law, Hick\'s Law, Gestalt principles, and more. Don\'t make the user think.',
+    github: 'https://github.com/littlebeansf/you-dont-have-to-use-your-brain',
+    pages: 'https://littlebeansf.github.io/you-dont-have-to-use-your-brain/',
+    image: 'img/you-dont-have-to-use-your-brain.png',
+    language: 'TypeScript',
+    isPrivate: false,
+    updated: '2026-05-18',
+    highlights: [
+      'Curated UX laws & principles',
+      'Fitts\' Law, Hick\'s Law, Gestalt',
+      'Interactive examples',
+      'Design decision cheat-sheets',
+      'Don\'t make me think'
+    ]
   }
 ];
 
