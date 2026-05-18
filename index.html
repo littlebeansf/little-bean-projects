@@ -19,6 +19,79 @@
     })();
   </script>
 
+  <!-- ===== LOADER ===== -->
+  <div id="site-loader" aria-hidden="true">
+    <div class="ldr-canvas">
+
+      <!-- Da Vinci: anatomical circle / Vitruvian ghost -->
+      <svg class="ldr-vitruvian" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- outer circle — drawn stroke -->
+        <circle class="ldr-stroke ldr-c1" cx="100" cy="100" r="88" stroke="#e8e5de" stroke-width="0.6" stroke-dasharray="553" stroke-dashoffset="553"/>
+        <!-- inner square -->
+        <rect class="ldr-stroke ldr-c2" x="25" y="25" width="150" height="150" stroke="#e8e5de" stroke-width="0.5" stroke-dasharray="600" stroke-dashoffset="600"/>
+        <!-- horizontal cross-hair -->
+        <line class="ldr-stroke ldr-c3" x1="12" y1="100" x2="188" y2="100" stroke="#e8e5de" stroke-width="0.4" stroke-dasharray="180" stroke-dashoffset="180"/>
+        <!-- vertical cross-hair -->
+        <line class="ldr-stroke ldr-c3" x1="100" y1="12" x2="100" y2="188" stroke="#e8e5de" stroke-width="0.4" stroke-dasharray="180" stroke-dashoffset="180"/>
+        <!-- diagonal annotations -->
+        <line class="ldr-stroke ldr-c4" x1="25" y1="25" x2="175" y2="175" stroke="#e8e5de" stroke-width="0.3" stroke-dasharray="212" stroke-dashoffset="212"/>
+        <line class="ldr-stroke ldr-c4" x1="175" y1="25" x2="25" y2="175" stroke="#e8e5de" stroke-width="0.3" stroke-dasharray="212" stroke-dashoffset="212"/>
+        <!-- golden ratio arc -->
+        <path class="ldr-stroke ldr-c5" d="M100 12 A88 88 0 0 1 188 100" stroke="#e8e5de" stroke-width="0.8" stroke-dasharray="138" stroke-dashoffset="138"/>
+        <!-- measurement tick marks -->
+        <g class="ldr-ticks" stroke="#e8e5de" stroke-width="0.4">
+          <line x1="100" y1="10" x2="100" y2="18"/>
+          <line x1="100" y1="182" x2="100" y2="190"/>
+          <line x1="10" y1="100" x2="18" y2="100"/>
+          <line x1="182" y1="100" x2="190" y2="100"/>
+          <line x1="62" y1="38" x2="67" y2="43"/>
+          <line x1="138" y1="38" x2="133" y2="43"/>
+          <line x1="62" y1="162" x2="67" y2="157"/>
+          <line x1="138" y1="162" x2="133" y2="157"/>
+        </g>
+        <!-- Vitruvian figure: body proportions lines -->
+        <g class="ldr-figure" stroke="#e8e5de" stroke-width="0.5" opacity="0.5">
+          <line x1="100" y1="38" x2="100" y2="155"/>
+          <line x1="68" y1="80" x2="132" y2="80"/>
+          <line x1="68" y1="80" x2="52" y2="120"/>
+          <line x1="132" y1="80" x2="148" y2="120"/>
+          <line x1="52" y1="120" x2="100" y2="155"/>
+          <line x1="148" y1="120" x2="100" y2="155"/>
+          <!-- head circle -->
+          <circle cx="100" cy="50" r="14" stroke-dasharray="88" stroke-dashoffset="88" class="ldr-stroke ldr-c5"/>
+        </g>
+      </svg>
+
+      <!-- Banksy: spray-paint stencil LB -->
+      <div class="ldr-stencil">
+        <span class="ldr-lb">LB</span>
+        <div class="ldr-drips">
+          <span class="ldr-drip" style="--dx:0px;   --dh:38px; --dd:0.0s"></span>
+          <span class="ldr-drip" style="--dx:14px;  --dh:22px; --dd:0.08s"></span>
+          <span class="ldr-drip" style="--dx:28px;  --dh:55px; --dd:0.04s"></span>
+          <span class="ldr-drip" style="--dx:42px;  --dh:18px; --dd:0.12s"></span>
+          <span class="ldr-drip" style="--dx:56px;  --dh:44px; --dd:0.02s"></span>
+          <span class="ldr-drip" style="--dx:70px;  --dh:29px; --dd:0.09s"></span>
+          <span class="ldr-drip" style="--dx:84px;  --dh:61px; --dd:0.05s"></span>
+          <span class="ldr-drip" style="--dx:98px;  --dh:20px; --dd:0.15s"></span>
+          <span class="ldr-drip" style="--dx:112px; --dh:47px; --dd:0.01s"></span>
+          <span class="ldr-drip" style="--dx:126px; --dh:33px; --dd:0.07s"></span>
+        </div>
+      </div>
+
+      <!-- Chaotic floating annotation fragments -->
+      <span class="ldr-note ldr-n1">∿</span>
+      <span class="ldr-note ldr-n2">φ</span>
+      <span class="ldr-note ldr-n3">π</span>
+      <span class="ldr-note ldr-n4">∞</span>
+      <span class="ldr-note ldr-n5">◼</span>
+      <span class="ldr-note ldr-n6">⌁</span>
+
+      <!-- Rip tear overlay -->
+      <div class="ldr-tear"></div>
+    </div>
+  </div>
+
   <!-- HEADER -->
   <header class="site-header">
     <div class="header-inner">
@@ -436,6 +509,28 @@
   <audio id="audio-player" preload="none"></audio>
 
   <script src="app.js"></script>
+  <script>
+    // Loader dismiss — wait for fonts + minimum drama time
+    (function() {
+      var DRAMA = 2600; // ms minimum screen time
+      var start = Date.now();
+      function dismiss() {
+        var el = document.getElementById('site-loader');
+        if (!el) return;
+        var elapsed = Date.now() - start;
+        var delay = Math.max(0, DRAMA - elapsed);
+        setTimeout(function() {
+          el.classList.add('ldr-exit');
+          setTimeout(function() { el.remove(); }, 900);
+        }, delay);
+      }
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(dismiss);
+      } else {
+        window.addEventListener('load', dismiss);
+      }
+    })();
+  </script>
   <!-- Buy Me a Coffee floating widget (public username only, no keys needed) -->
   <script data-name="BMC-Widget" data-cfasync="false"
     src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
