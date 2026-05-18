@@ -153,8 +153,8 @@ const PROJECTS = [
   {
     id: 'hard-techno-dj-academy',
     name: 'hard-techno-dj-academy',
-    category: 'tools',
-    categoryLabel: 'Tool',
+    category: 'music',
+    categoryLabel: 'Music',
     description: 'Interactive Hard Techno DJ Learning App — learn genres, practice mixing, compose beats.',
     github: 'https://github.com/littlebeansf/hard-techno-dj-academy',
     pages: 'https://littlebeansf.github.io/hard-techno-dj-academy/',
