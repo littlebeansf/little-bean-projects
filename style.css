@@ -1417,9 +1417,14 @@ p, li { text-wrap: pretty; }
   #view-music,
   #view-me { padding: var(--space-6) 12px var(--space-16); }
 
-  /* Hero stats: wrap freely */
-  .hero-stats { flex-wrap: wrap; gap: var(--space-3); }
-  .stat-item { flex: 1 1 auto; min-width: 70px; }
+  /* Hero: shrink title and collapse stats to one tight row */
+  .hero { padding-bottom: var(--space-5); margin-bottom: var(--space-5); }
+  .hero-eyebrow { font-size: 9px; margin-bottom: var(--space-2); }
+  .hero-title { font-size: 1.75rem; line-height: 1; margin-bottom: var(--space-3); }
+  .hero-meta { gap: var(--space-2); flex-wrap: wrap; row-gap: 4px; }
+  .hero-count { font-size: 11px; }
+  .hero-divider { height: 10px; }
+  #view-dashboard { padding-top: var(--space-5); }
 
   /* Cat tabs: scrollable row, no wrap */
   .cat-tabs {
@@ -1488,7 +1493,8 @@ p, li { text-wrap: pretty; }
 @media (max-width: 480px) {
   .logo-lb { font-size: 10px; padding: 2px 4px; }
   .logo-dot { width: 4px; height: 4px; }
-  .hero-count { font-size: 22px; }
+  .hero-title { font-size: 1.5rem; }
+  .hero-count { font-size: 10px; }
   .tile-card { min-height: 130px; }
   .album-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-2); }
   .album-info { padding: var(--space-1) var(--space-2); }
