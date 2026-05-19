@@ -145,13 +145,15 @@
         <div class="hero-meta">
           <span class="hero-count"><strong>14</strong> repos</span>
           <span class="hero-divider"></span>
-          <span class="hero-count"><strong>1</strong> study</span>
-          <span class="hero-divider"></span>
           <span class="hero-count"><strong>5</strong> games</span>
           <span class="hero-divider"></span>
-          <span class="hero-count"><strong>5</strong> trackers</span>
+          <span class="hero-count"><strong>2</strong> apps</span>
+          <span class="hero-divider"></span>
+          <span class="hero-count"><strong>3</strong> trackers</span>
           <span class="hero-divider"></span>
           <span class="hero-count"><strong>2</strong> tools</span>
+          <span class="hero-divider"></span>
+          <span class="hero-count"><strong>1</strong> study</span>
           <span class="hero-divider"></span>
           <span class="hero-count"><strong>1</strong> music</span>
           <span class="hero-divider"></span>
@@ -159,151 +161,73 @@
         </div>
       </div>
 
-      <!-- Quick Access — tile cards -->
-      <div class="section">
+      <!-- Quick Access — Category Tabs -->
+      <div class="section cat-section">
         <div class="section-label">// Quick Access</div>
 
-        <div class="tile-group">
-          <div class="tile-group-label">Study</div>
-          <div class="tile-row">
-            <a href="https://littlebeansf.github.io/you-dont-have-to-use-your-brain/" target="_blank" rel="noopener" class="tile-card" style="--tile-img: url('img/you-dont-have-to-use-your-brain.png')">
-              <div class="tile-overlay"></div>
-              <div class="tile-body">
-                <span class="tile-name">don't use your brain</span>
-                <span class="tile-desc">UX laws library · Fitts · Hick's · Gestalt</span>
-              </div>
-              <span class="tile-arrow">↗</span>
-            </a>
-          </div>
+        <!-- Tab bar -->
+        <div class="cat-tabs" role="tablist">
+          <button class="cat-tab active" data-cat="games" role="tab" aria-selected="true">
+            <svg class="cat-tab-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <!-- game controller -->
+              <rect x="2" y="6" width="16" height="10" rx="3"/>
+              <line x1="6" y1="9" x2="6" y2="13"/><line x1="4" y1="11" x2="8" y2="11"/>
+              <circle cx="13" cy="10" r="1" fill="currentColor" stroke="none"/>
+              <circle cx="15" cy="12" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+            <span>Games</span>
+          </button>
+          <button class="cat-tab" data-cat="apps" role="tab">
+            <svg class="cat-tab-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <!-- terminal window -->
+              <rect x="2" y="3" width="16" height="14" rx="1"/>
+              <line x1="2" y1="7" x2="18" y2="7"/>
+              <polyline points="5,10.5 8,12.5 5,14.5" stroke-linejoin="round"/>
+              <line x1="9.5" y1="14.5" x2="14" y2="14.5"/>
+            </svg>
+            <span>Apps</span>
+          </button>
+          <button class="cat-tab" data-cat="trackers" role="tab">
+            <svg class="cat-tab-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <!-- heartbeat / pulse -->
+              <polyline points="1,10 5,10 7,5 9,15 11,8 13,12 15,10 19,10"/>
+            </svg>
+            <span>Trackers</span>
+          </button>
+          <button class="cat-tab" data-cat="tools" role="tab">
+            <svg class="cat-tab-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <!-- wrench -->
+              <path d="M14.5 2.5a3.5 3.5 0 0 0-3.46 4.04L4 13.5 4 16l2.5 0 7-7.04A3.5 3.5 0 0 0 14.5 2.5z"/>
+              <line x1="4.5" y1="15.5" x2="6" y2="14"/>
+            </svg>
+            <span>Tools</span>
+          </button>
+          <button class="cat-tab" data-cat="study" role="tab">
+            <svg class="cat-tab-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <!-- open book -->
+              <path d="M10 16 Q10 4 3 4 L3 16 Q10 15 10 16Z"/>
+              <path d="M10 16 Q10 4 17 4 L17 16 Q10 15 10 16Z"/>
+            </svg>
+            <span>Study</span>
+          </button>
+          <button class="cat-tab" data-cat="music" role="tab">
+            <svg class="cat-tab-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <!-- music notes -->
+              <path d="M8 14 L8 6 L16 4 L16 12"/>
+              <circle cx="6.5" cy="14" r="1.5"/>
+              <circle cx="14.5" cy="12" r="1.5"/>
+            </svg>
+            <span>Music</span>
+          </button>
         </div>
 
-        <div class="tile-group">
-          <div class="tile-group-label">Games</div>
-          <div class="tile-row">
-            <a href="https://littlebeansf.github.io/gwunt/" target="_blank" rel="noopener" class="tile-card" style="--tile-img: url('img/gwunt.png')">
-              <div class="tile-overlay"></div>
-              <div class="tile-body">
-                <span class="tile-name">gwunt</span>
-                <span class="tile-desc">Myth card battler · 6 factions · AI opponent</span>
-              </div>
-              <span class="tile-arrow">↗</span>
-            </a>
-            <a href="https://littlebeansf.github.io/couch-quest/" target="_blank" rel="noopener" class="tile-card" style="--tile-img: url('img/couch-quest.png')">
-              <div class="tile-overlay"></div>
-              <div class="tile-body">
-                <span class="tile-name">couch-quest</span>
-                <span class="tile-desc">Party card game · Mobile-first</span>
-              </div>
-              <span class="tile-arrow">↗</span>
-            </a>
-            <a href="https://littlebeansf.github.io/dealer-life-simulator/" target="_blank" rel="noopener" class="tile-card" style="--tile-img: url('img/dealer-life-simulator.png')">
-              <div class="tile-overlay"></div>
-              <div class="tile-body">
-                <span class="tile-name">The Goblin's Deal</span>
-                <span class="tile-desc">Fantasy life sim · choices · fate</span>
-              </div>
-              <span class="tile-arrow">↗</span>
-            </a>
-            <a href="https://littlebeansf.github.io/it-clicker/" target="_blank" rel="noopener" class="tile-card" style="--tile-img: url('img/it-clicker.png')">
-              <div class="tile-overlay"></div>
-              <div class="tile-body">
-                <span class="tile-name">it-clicker</span>
-                <span class="tile-desc">IT idle clicker · Help desk chaos</span>
-              </div>
-              <span class="tile-arrow">↗</span>
-            </a>
-            <a href="https://littlebeansf.github.io/sip-and-spill/" target="_blank" rel="noopener" class="tile-card" style="--tile-img: url('img/sip-and-spill.png')">
-              <div class="tile-overlay"></div>
-              <div class="tile-body">
-                <span class="tile-name">Sip &amp; Spill</span>
-                <span class="tile-desc">Drinking game · rounds · mini-games</span>
-              </div>
-              <span class="tile-arrow">↗</span>
-            </a>
-          </div>
+        <!-- SVG category loader (plays on tab switch) -->
+        <div class="cat-loader" id="cat-loader" aria-hidden="true">
+          <svg id="cat-loader-svg" viewBox="0 0 80 80" width="80" height="80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></svg>
         </div>
 
-        <div class="tile-group">
-          <div class="tile-group-label">Trackers &amp; Apps</div>
-          <div class="tile-row">
-            <a href="https://littlebeansf.github.io/framestack/" target="_blank" rel="noopener" class="tile-card" style="--tile-img: url('img/framestack.png')">
-              <div class="tile-overlay"></div>
-              <div class="tile-body">
-                <span class="tile-name">framestack</span>
-                <span class="tile-desc">Media universe tracker</span>
-              </div>
-              <span class="tile-arrow">↗</span>
-            </a>
-            <a href="https://littlebeansf.github.io/cardvault/" target="_blank" rel="noopener" class="tile-card" style="--tile-img: url('img/cardvault.png')">
-              <div class="tile-overlay"></div>
-              <div class="tile-body">
-                <span class="tile-name">cardvault</span>
-                <span class="tile-desc">Card collection · React + SQLite</span>
-              </div>
-              <span class="tile-arrow">↗</span>
-            </a>
-            <a href="https://littlebeansf.github.io/hunter-system/" target="_blank" rel="noopener" class="tile-card" style="--tile-img: url('img/hunter-system.png')">
-              <div class="tile-overlay"></div>
-              <div class="tile-body">
-                <span class="tile-name">hunter-system</span>
-                <span class="tile-desc">Life RPG · habits · XP · rank up</span>
-              </div>
-              <span class="tile-arrow">↗</span>
-            </a>
-            <a href="https://littlebeansf.github.io/sunfinder/" target="_blank" rel="noopener" class="tile-card" style="--tile-img: url('img/sunfinder.png')">
-              <div class="tile-overlay"></div>
-              <div class="tile-body">
-                <span class="tile-name">Sunfinder</span>
-                <span class="tile-desc">Sun locator · Lake Constance · TypeScript</span>
-              </div>
-              <span class="tile-arrow">↗</span>
-            </a>
-            <a href="https://littlebeansf.github.io/currency-chaos/" target="_blank" rel="noopener" class="tile-card" style="--tile-img: url('img/currency-chaos.png')">
-              <div class="tile-overlay"></div>
-              <div class="tile-body">
-                <span class="tile-name">Currency Chaos</span>
-                <span class="tile-desc">Cursed converter · real + fake + space money</span>
-              </div>
-              <span class="tile-arrow">↗</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="tile-group">
-          <div class="tile-group-label">Creative Tools</div>
-          <div class="tile-row">
-            <a href="https://littlebeansf.github.io/rhe-3d/" target="_blank" rel="noopener" class="tile-card" style="--tile-img: url('img/rhe-3d.png')">
-              <div class="tile-overlay"></div>
-              <div class="tile-body">
-                <span class="tile-name">rhe-3d</span>
-                <span class="tile-desc">Image to 3D · STL · OBJ · GLB export</span>
-              </div>
-              <span class="tile-arrow">↗</span>
-            </a>
-            <a href="https://littlebeansf.github.io/stringcraft/" target="_blank" rel="noopener" class="tile-card" style="--tile-img: url('img/stringcraft.png')">
-              <div class="tile-overlay"></div>
-              <div class="tile-body">
-                <span class="tile-name">stringcraft</span>
-                <span class="tile-desc">String art planner · 2D + 3D · Export suite</span>
-              </div>
-              <span class="tile-arrow">↗</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="tile-group">
-          <div class="tile-group-label">Music</div>
-          <div class="tile-row">
-            <a href="https://littlebeansf.github.io/hard-techno-dj-academy/" target="_blank" rel="noopener" class="tile-card" style="--tile-img: url('img/hard-techno-dj-academy.png')">
-              <div class="tile-overlay"></div>
-              <div class="tile-body">
-                <span class="tile-name">hard-techno-dj-academy</span>
-                <span class="tile-desc">DJ learning app · genres · mixing · beats</span>
-              </div>
-              <span class="tile-arrow">↗</span>
-            </a>
-          </div>
-        </div>
+        <!-- Tile grid (JS-rendered) -->
+        <div class="tile-row" id="cat-tiles"></div>
       </div>
 
       <!-- Recently Updated -->
@@ -355,15 +279,9 @@
     <div id="view-projects-inner">
       <div class="projects-header">
         <h1 class="projects-title">All_Projects</h1>
-        <div class="filter-tabs">
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="games">Games</button>
-          <button class="filter-btn" data-filter="trackers">Trackers</button>
-          <button class="filter-btn" data-filter="tools">Tools</button>
-          <button class="filter-btn" data-filter="music">Music</button>
-        </div>
       </div>
-      <div class="projects-list" id="projectsList"></div>
+      <!-- Accordions rendered by JS -->
+      <div class="accordions" id="accordions"></div>
     </div>
   </div>
 

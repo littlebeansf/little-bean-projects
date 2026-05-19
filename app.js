@@ -154,7 +154,7 @@ const PROJECTS = [
   {
     id: 'sunfinder',
     name: 'Sunfinder',
-    category: 'trackers',
+    category: 'apps',
     categoryLabel: 'App',
     description: 'Find the nearest sunny places from your location. Built for Lake Constance area where clouds never leave.',
     github: 'https://github.com/littlebeansf/sunfinder',
@@ -173,8 +173,8 @@ const PROJECTS = [
   {
     id: 'currency-chaos',
     name: 'Currency Chaos',
-    category: 'trackers',
-    categoryLabel: 'Tool',
+    category: 'apps',
+    categoryLabel: 'App',
     description: "The world's most irresponsible currency converter. Real money, fake money, space money.",
     github: 'https://github.com/littlebeansf/currency-chaos',
     pages: 'https://littlebeansf.github.io/currency-chaos/',
@@ -299,38 +299,6 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
   });
 })();
 
-/* ===== RENDER PROJECT LIST ===== */
-function renderProjects(filter) {
-  const list = document.getElementById('projectsList');
-  const filtered = !filter || filter === 'all' ? PROJECTS : PROJECTS.filter(p => p.category === filter);
-  list.innerHTML = filtered.map((p, i) => `
-    <button class="project-banner" onclick="openProject('${p.id}')">
-      <div class="pb-thumb" style="background-image:url('${p.image}')"></div>
-      <span class="pb-num">${String(i + 1).padStart(2, '0')}</span>
-      <div class="pb-body">
-        <div class="pb-top">
-          <span class="pb-name">${p.name}</span>
-          <span class="pb-cat">${p.categoryLabel.toUpperCase()}</span>
-        </div>
-        <p class="pb-desc">${p.description}</p>
-        <div class="pb-footer">
-          <span class="pb-lang">${p.language}</span>
-          <span class="pb-lang">${p.updated}</span>
-        </div>
-      </div>
-      <div class="pb-action"><span class="pb-arrow">→</span></div>
-    </button>
-  `).join('');
-}
-
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderProjects(btn.dataset.filter);
-  });
-});
-
 /* ===== MODAL ===== */
 function openProject(id) {
   const p = PROJECTS.find(x => x.id === id);
@@ -393,8 +361,505 @@ function closeModal() {
 }
 function onEsc(e) { if (e.key === 'Escape') closeModal(); }
 
+/* ═══════════════════════════════════════════════════════
+   CATEGORY DEFINITIONS
+═══════════════════════════════════════════════════════ */
+const CATEGORIES = [
+  { id: 'games',    label: 'Games' },
+  { id: 'apps',     label: 'Apps' },
+  { id: 'trackers', label: 'Trackers' },
+  { id: 'tools',    label: 'Tools' },
+  { id: 'study',    label: 'Study' },
+  { id: 'music',    label: 'Music' },
+];
+
+/* ═══════════════════════════════════════════════════════
+   CATEGORY TILE DATA (for Quick Access)
+═══════════════════════════════════════════════════════ */
+const TILE_DATA = {
+  'gwunt':                       { pages: 'https://littlebeansf.github.io/gwunt/',                        desc: 'Myth card battler · 6 factions · AI opponent' },
+  'couch-quest':                 { pages: 'https://littlebeansf.github.io/couch-quest/',                  desc: 'Party card game · Mobile-first' },
+  'dealer-life-simulator':       { pages: 'https://littlebeansf.github.io/dealer-life-simulator/',        desc: 'Fantasy life sim · choices · fate' },
+  'it-clicker':                  { pages: 'https://littlebeansf.github.io/it-clicker/',                   desc: 'IT idle clicker · Help desk chaos' },
+  'sip-and-spill':               { pages: 'https://littlebeansf.github.io/sip-and-spill/',                desc: 'Drinking game · rounds · mini-games' },
+  'sunfinder':                   { pages: 'https://littlebeansf.github.io/sunfinder/',                    desc: 'Sun locator · Lake Constance' },
+  'currency-chaos':              { pages: 'https://littlebeansf.github.io/currency-chaos/',               desc: 'Cursed converter · real + fake + space money' },
+  'framestack':                  { pages: 'https://littlebeansf.github.io/framestack/',                   desc: 'Media universe tracker' },
+  'cardvault':                   { pages: 'https://littlebeansf.github.io/cardvault/',                    desc: 'Card collection · React + SQLite' },
+  'hunter-system':               { pages: 'https://littlebeansf.github.io/hunter-system/',                desc: 'Life RPG · habits · XP · rank up' },
+  'rhe-3d':                      { pages: 'https://littlebeansf.github.io/rhe-3d/',                       desc: 'Image to 3D · STL · OBJ · GLB export' },
+  'stringcraft':                 { pages: 'https://littlebeansf.github.io/stringcraft/',                  desc: 'String art planner · 2D + 3D' },
+  'you-dont-have-to-use-your-brain': { pages: 'https://littlebeansf.github.io/you-dont-have-to-use-your-brain/', desc: "UX laws library · Fitts · Hick's · Gestalt" },
+  'hard-techno-dj-academy':      { pages: 'https://littlebeansf.github.io/hard-techno-dj-academy/',      desc: 'DJ learning app · genres · mixing · beats' },
+};
+
+/* ═══════════════════════════════════════════════════════
+   SVG LOADER ANIMATIONS
+   Each returns a function(svgEl, done) that animates the
+   SVG element and calls done() when finished.
+═══════════════════════════════════════════════════════ */
+const LOADERS = {
+
+  games: function(svg, done) {
+    // Controller body + d-pad + buttons draw stroke by stroke
+    svg.innerHTML = `
+      <rect id="ll-body" x="8" y="22" width="64" height="36" rx="10"
+        stroke-width="2.8" stroke-dasharray="200" stroke-dashoffset="200"/>
+      <line id="ll-dp1" x1="22" y1="32" x2="22" y2="48"
+        stroke-width="2.8" stroke-dasharray="20" stroke-dashoffset="20"/>
+      <line id="ll-dp2" x1="14" y1="40" x2="30" y2="40"
+        stroke-width="2.8" stroke-dasharray="20" stroke-dashoffset="20"/>
+      <circle id="ll-b1" cx="54" cy="33" r="4"
+        stroke-width="2.8" stroke-dasharray="30" stroke-dashoffset="30"/>
+      <circle id="ll-b2" cx="64" cy="40" r="4"
+        stroke-width="2.8" stroke-dasharray="30" stroke-dashoffset="30"/>
+    `;
+    const els = ['ll-body','ll-dp1','ll-dp2','ll-b1','ll-b2'];
+    const delays = [0, 280, 340, 380, 430];
+    let finished = 0;
+    els.forEach(function(id, i) {
+      var el = svg.getElementById(id);
+      var da = parseFloat(el.getAttribute('stroke-dasharray'));
+      setTimeout(function() {
+        animateDash(el, da, 0, 320, function() {
+          finished++;
+          if (finished === els.length) done();
+        });
+      }, delays[i]);
+    });
+  },
+
+  apps: function(svg, done) {
+    // Terminal window draws, then cursor blinks inside
+    svg.innerHTML = `
+      <rect id="ll-win" x="8" y="10" width="64" height="52" rx="2"
+        stroke-width="2.8" stroke-dasharray="250" stroke-dashoffset="250"/>
+      <line id="ll-bar" x1="8" y1="22" x2="72" y2="22"
+        stroke-width="2.8" stroke-dasharray="70" stroke-dashoffset="70"/>
+      <polyline id="ll-arr" points="16,33 24,40 16,47"
+        stroke-width="2.8" stroke-dasharray="30" stroke-dashoffset="30"/>
+      <rect id="ll-cur" x="28" y="46" width="8" height="2" rx="1"
+        stroke-width="0" fill="currentColor" opacity="0"/>
+    `;
+    animateDash(svg.getElementById('ll-win'), 250, 0, 350, function() {
+      animateDash(svg.getElementById('ll-bar'), 70, 0, 120, function() {
+        animateDash(svg.getElementById('ll-arr'), 30, 0, 200, function() {
+          // blink cursor 3 times
+          var cur = svg.getElementById('ll-cur');
+          var blinks = 0;
+          function blink() {
+            cur.setAttribute('opacity', blinks % 2 === 0 ? '1' : '0');
+            blinks++;
+            if (blinks < 6) setTimeout(blink, 120);
+            else done();
+          }
+          blink();
+        });
+      });
+    });
+  },
+
+  trackers: function(svg, done) {
+    // Heartbeat flatline → spike → flatline
+    svg.innerHTML = `
+      <polyline id="ll-pulse" points="4,40 18,40 18,40 18,40 36,40 36,40 36,40 54,40 54,40 54,40 76,40"
+        stroke-width="2.8" stroke-dasharray="500" stroke-dashoffset="500"/>
+    `;
+    var el = svg.getElementById('ll-pulse');
+    // Phase 1: draw flat line to midpoint
+    animateDash(el, 500, 0, 180, function() {
+      // Morph to spike
+      morphPoints(el,
+        '4,40 18,40 22,40 26,40 28,40 30,40 32,40 36,40 40,40 44,40 54,40 76,40',
+        '4,40 18,40 22,40 26,20 28,10 30,60 32,68 36,40 40,30 44,40 54,40 76,40',
+        260, function() {
+          // Fade back to flat
+          setTimeout(function() {
+            morphPoints(el,
+              '4,40 18,40 22,40 26,20 28,10 30,60 32,68 36,40 40,30 44,40 54,40 76,40',
+              '4,40 18,40 22,40 26,40 28,40 30,40 32,40 36,40 40,40 44,40 54,40 76,40',
+              220, done);
+          }, 80);
+        });
+    });
+  },
+
+  tools: function(svg, done) {
+    // Gear draws tooth-by-tooth, then rotates
+    svg.innerHTML = `
+      <g id="ll-gear" transform="translate(40,40)">
+        <circle cx="0" cy="0" r="10"
+          stroke-width="2.8" stroke-dasharray="70" stroke-dashoffset="70"/>
+        <circle cx="0" cy="0" r="3"
+          stroke-width="2.8" fill="none"/>
+        <line x1="0" y1="-16" x2="0" y2="-24" stroke-width="4" stroke-linecap="square"
+          stroke-dasharray="10" stroke-dashoffset="10"/>
+        <line x1="0" y1="16" x2="0" y2="24" stroke-width="4" stroke-linecap="square"
+          stroke-dasharray="10" stroke-dashoffset="10"/>
+        <line x1="-16" y1="0" x2="-24" y2="0" stroke-width="4" stroke-linecap="square"
+          stroke-dasharray="10" stroke-dashoffset="10"/>
+        <line x1="16" y1="0" x2="24" y2="0" stroke-width="4" stroke-linecap="square"
+          stroke-dasharray="10" stroke-dashoffset="10"/>
+        <line x1="-11" y1="-11" x2="-17" y2="-17" stroke-width="4" stroke-linecap="square"
+          stroke-dasharray="10" stroke-dashoffset="10"/>
+        <line x1="11" y1="-11" x2="17" y2="-17" stroke-width="4" stroke-linecap="square"
+          stroke-dasharray="10" stroke-dashoffset="10"/>
+        <line x1="-11" y1="11" x2="-17" y2="17" stroke-width="4" stroke-linecap="square"
+          stroke-dasharray="10" stroke-dashoffset="10"/>
+        <line x1="11" y1="11" x2="17" y2="17" stroke-width="4" stroke-linecap="square"
+          stroke-dasharray="10" stroke-dashoffset="10"/>
+      </g>
+    `;
+    var gear = svg.getElementById('ll-gear');
+    var circle = gear.querySelector('circle');
+    var teeth = gear.querySelectorAll('line');
+    animateDash(circle, 70, 0, 280, function() {
+      var done2 = 0;
+      teeth.forEach(function(t, i) {
+        setTimeout(function() {
+          animateDash(t, 10, 0, 100, function() {
+            done2++;
+            if (done2 === teeth.length) {
+              // spin 180deg
+              animateRotate(gear, 0, 180, 400, done);
+            }
+          });
+        }, i * 30);
+      });
+    });
+  },
+
+  study: function(svg, done) {
+    // Open book — spine appears, then pages fan out left and right
+    svg.innerHTML = `
+      <line id="ll-spine" x1="40" y1="15" x2="40" y2="65"
+        stroke-width="2.8" stroke-dasharray="55" stroke-dashoffset="55"/>
+      <path id="ll-left" d="M40,15 Q20,18 12,25 L12,62 Q22,56 40,58"
+        stroke-width="2.8" stroke-dasharray="200" stroke-dashoffset="200" fill="none"/>
+      <path id="ll-right" d="M40,15 Q60,18 68,25 L68,62 Q58,56 40,58"
+        stroke-width="2.8" stroke-dasharray="200" stroke-dashoffset="200" fill="none"/>
+      <line id="ll-line1" x1="17" y1="32" x2="36" y2="31"
+        stroke-width="1.6" stroke-dasharray="22" stroke-dashoffset="22" opacity="0.6"/>
+      <line id="ll-line2" x1="17" y1="38" x2="36" y2="37"
+        stroke-width="1.6" stroke-dasharray="22" stroke-dashoffset="22" opacity="0.6"/>
+      <line id="ll-line3" x1="44" y1="32" x2="63" y2="31"
+        stroke-width="1.6" stroke-dasharray="22" stroke-dashoffset="22" opacity="0.6"/>
+      <line id="ll-line4" x1="44" y1="38" x2="63" y2="37"
+        stroke-width="1.6" stroke-dasharray="22" stroke-dashoffset="22" opacity="0.6"/>
+    `;
+    animateDash(svg.getElementById('ll-spine'), 55, 0, 160, function() {
+      var left = svg.getElementById('ll-left'), right = svg.getElementById('ll-right');
+      var donePages = 0;
+      function onPage() { donePages++; if (donePages === 2) {
+        var lines = [svg.getElementById('ll-line1'), svg.getElementById('ll-line2'),
+                     svg.getElementById('ll-line3'), svg.getElementById('ll-line4')];
+        var dl = 0;
+        lines.forEach(function(l, i) {
+          setTimeout(function() {
+            animateDash(l, 22, 0, 120, function() { dl++; if (dl === lines.length) done(); });
+          }, i * 50);
+        });
+      }}
+      animateDash(left,  200, 0, 260, onPage);
+      animateDash(right, 200, 0, 260, onPage);
+    });
+  },
+
+  music: function(svg, done) {
+    // Three notes draw their stems, then float upward
+    svg.innerHTML = `
+      <g id="ll-note1" transform="translate(0,0)">
+        <line x1="18" y1="55" x2="18" y2="30" stroke-width="2.8"
+          stroke-dasharray="28" stroke-dashoffset="28"/>
+        <ellipse cx="15" cy="56" rx="6" ry="4" transform="rotate(-15,15,56)"
+          stroke-width="2.8" stroke-dasharray="40" stroke-dashoffset="40"/>
+        <line x1="18" y1="30" x2="32" y2="27" stroke-width="2.8"
+          stroke-dasharray="16" stroke-dashoffset="16"/>
+      </g>
+      <g id="ll-note2" transform="translate(14,5)">
+        <line x1="18" y1="55" x2="18" y2="30" stroke-width="2.8"
+          stroke-dasharray="28" stroke-dashoffset="28"/>
+        <ellipse cx="15" cy="56" rx="6" ry="4" transform="rotate(-15,15,56)"
+          stroke-width="2.8" stroke-dasharray="40" stroke-dashoffset="40"/>
+        <line x1="18" y1="30" x2="32" y2="27" stroke-width="2.8"
+          stroke-dasharray="16" stroke-dashoffset="16"/>
+      </g>
+      <g id="ll-note3" transform="translate(28,0)">
+        <line x1="18" y1="55" x2="18" y2="30" stroke-width="2.8"
+          stroke-dasharray="28" stroke-dashoffset="28"/>
+        <ellipse cx="15" cy="56" rx="6" ry="4" transform="rotate(-15,15,56)"
+          stroke-width="2.8" stroke-dasharray="40" stroke-dashoffset="40"/>
+        <line x1="18" y1="30" x2="32" y2="27" stroke-width="2.8"
+          stroke-dasharray="16" stroke-dashoffset="16"/>
+      </g>
+    `;
+    [1,2,3].forEach(function(n, i) {
+      var noteEl = svg.getElementById('ll-note' + n);
+      var parts = noteEl.querySelectorAll('line, ellipse');
+      setTimeout(function() {
+        var dp = 0;
+        parts.forEach(function(p, j) {
+          setTimeout(function() {
+            var da = parseFloat(p.getAttribute('stroke-dasharray'));
+            animateDash(p, da, 0, 180, function() {
+              dp++;
+              if (dp === parts.length && n === 3) {
+                // float all notes up
+                floatUp(svg.getElementById('ll-note1'), 0,   12, 500);
+                floatUp(svg.getElementById('ll-note2'), 80,  10, 500);
+                floatUp(svg.getElementById('ll-note3'), 160, 14, 500, done);
+              }
+            });
+          }, j * 60);
+        });
+      }, i * 130);
+    });
+  },
+};
+
+/* ═══════════════════════════════════════════════════════
+   ANIMATION HELPERS
+═══════════════════════════════════════════════════════ */
+function animateDash(el, from, to, dur, done) {
+  var start = null;
+  function step(ts) {
+    if (!start) start = ts;
+    var p = Math.min((ts - start) / dur, 1);
+    var e = p < 0.5 ? 2*p*p : -1+(4-2*p)*p; // ease in-out
+    el.setAttribute('stroke-dashoffset', (from + (to - from) * e).toFixed(2));
+    if (p < 1) requestAnimationFrame(step);
+    else if (done) done();
+  }
+  requestAnimationFrame(step);
+}
+
+function morphPoints(el, fromPts, toPts, dur, done) {
+  var from = fromPts.split(' ').map(function(p) { return p.split(',').map(Number); });
+  var to   = toPts.split(' ').map(function(p)   { return p.split(',').map(Number); });
+  var start = null;
+  function step(ts) {
+    if (!start) start = ts;
+    var p = Math.min((ts - start) / dur, 1);
+    var e = p < 0.5 ? 2*p*p : -1+(4-2*p)*p;
+    var pts = from.map(function(f, i) {
+      return (f[0] + (to[i][0] - f[0]) * e).toFixed(1) + ',' + (f[1] + (to[i][1] - f[1]) * e).toFixed(1);
+    });
+    el.setAttribute('points', pts.join(' '));
+    if (p < 1) requestAnimationFrame(step);
+    else if (done) done();
+  }
+  requestAnimationFrame(step);
+}
+
+function animateRotate(el, fromDeg, toDeg, dur, done) {
+  var bbox = { x: 0, y: 0 }; // gear is centred at 0,0 via translate
+  var start = null;
+  function step(ts) {
+    if (!start) start = ts;
+    var p = Math.min((ts - start) / dur, 1);
+    var e = p < 0.5 ? 2*p*p : -1+(4-2*p)*p;
+    var deg = fromDeg + (toDeg - fromDeg) * e;
+    var existing = el.getAttribute('transform') || '';
+    var base = existing.replace(/\s*rotate\([^)]*\)/, '');
+    el.setAttribute('transform', base + ' rotate(' + deg.toFixed(1) + ')');
+    if (p < 1) requestAnimationFrame(step);
+    else if (done) done();
+  }
+  requestAnimationFrame(step);
+}
+
+function floatUp(el, delay, dist, dur, done) {
+  setTimeout(function() {
+    var start = null;
+    var existing = el.getAttribute('transform') || '';
+    var match = existing.match(/translate\(([^,]+),([^)]+)\)/);
+    var ox = match ? parseFloat(match[1]) : 0;
+    var oy = match ? parseFloat(match[2]) : 0;
+    function step(ts) {
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var e = 1 - Math.pow(1 - p, 3); // ease out
+      var ny = oy - dist * e;
+      var op = 1 - p;
+      el.setAttribute('transform', 'translate(' + ox + ',' + ny.toFixed(2) + ')');
+      el.style.opacity = op.toFixed(2);
+      if (p < 1) requestAnimationFrame(step);
+      else { el.style.opacity = '0'; if (done) done(); }
+    }
+    requestAnimationFrame(step);
+  }, delay);
+}
+
+/* ═══════════════════════════════════════════════════════
+   CATEGORY TABS — Quick Access
+═══════════════════════════════════════════════════════ */
+(function() {
+  var tilesEl  = document.getElementById('cat-tiles');
+  var loaderEl = document.getElementById('cat-loader');
+  var loaderSvg= document.getElementById('cat-loader-svg');
+  if (!tilesEl) return;
+
+  var currentCat = 'games';
+  var animating   = false;
+
+  function renderTiles(cat) {
+    var projs = PROJECTS.filter(function(p) { return p.category === cat; });
+    tilesEl.innerHTML = projs.map(function(p) {
+      var td = TILE_DATA[p.id] || {};
+      var url = td.pages || p.pages || p.github;
+      var desc = td.desc || p.description.slice(0, 50);
+      return '<a href="' + url + '" target="_blank" rel="noopener" class="tile-card" style="--tile-img:url(\''+p.image+'\')">' +
+        '<div class="tile-overlay"></div>' +
+        '<div class="tile-body">' +
+          '<span class="tile-name">' + p.name + '</span>' +
+          '<span class="tile-desc">' + desc + '</span>' +
+        '</div>' +
+        '<span class="tile-arrow">\u2197</span>' +
+        '</a>';
+    }).join('');
+  }
+
+  function switchCat(cat) {
+    if (cat === currentCat || animating) return;
+    animating = true;
+    currentCat = cat;
+
+    // update tab active state
+    document.querySelectorAll('.cat-tab').forEach(function(t) {
+      t.classList.toggle('active', t.dataset.cat === cat);
+    });
+
+    // fade out tiles
+    tilesEl.style.opacity = '0';
+    tilesEl.style.transform = 'translateY(6px)';
+
+    // show loader after short delay
+    setTimeout(function() {
+      loaderEl.classList.add('visible');
+      loaderSvg.innerHTML = '';
+      loaderSvg.style.opacity = '1';
+
+      var loader = LOADERS[cat];
+      if (loader) {
+        loader(loaderSvg, function() {
+          // small pause after animation
+          setTimeout(function() {
+            loaderEl.classList.remove('visible');
+            renderTiles(cat);
+            // fade tiles in
+            requestAnimationFrame(function() {
+              requestAnimationFrame(function() {
+                tilesEl.style.transition = 'opacity 220ms ease, transform 220ms ease';
+                tilesEl.style.opacity = '1';
+                tilesEl.style.transform = 'translateY(0)';
+                setTimeout(function() {
+                  tilesEl.style.transition = '';
+                  animating = false;
+                }, 230);
+              });
+            });
+          }, 120);
+        });
+      } else {
+        loaderEl.classList.remove('visible');
+        renderTiles(cat);
+        tilesEl.style.opacity = '1';
+        tilesEl.style.transform = 'translateY(0)';
+        animating = false;
+      }
+    }, 100);
+  }
+
+  document.querySelectorAll('.cat-tab').forEach(function(btn) {
+    btn.addEventListener('click', function() { switchCat(btn.dataset.cat); });
+  });
+
+  // Initial render
+  renderTiles('games');
+  tilesEl.style.opacity = '1';
+})();
+
+/* ═══════════════════════════════════════════════════════
+   ACCORDIONS — Projects View
+═══════════════════════════════════════════════════════ */
+(function() {
+  var container = document.getElementById('accordions');
+  if (!container) return;
+
+  var openId = null; // only one open at a time
+
+  CATEGORIES.forEach(function(cat, ci) {
+    var projs = PROJECTS.filter(function(p) { return p.category === cat.id; });
+    if (!projs.length) return;
+
+    var acc = document.createElement('div');
+    acc.className = 'accordion' + (ci === 0 ? ' open' : '');
+    if (ci === 0) openId = cat.id;
+
+    var header = document.createElement('button');
+    header.className = 'acc-header';
+    header.setAttribute('aria-expanded', ci === 0 ? 'true' : 'false');
+    header.innerHTML =
+      '<span class="acc-label">' + cat.label.toUpperCase() + '</span>' +
+      '<span class="acc-count">' + projs.length + '</span>' +
+      '<svg class="acc-arrow" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,6 8,10 12,6"/></svg>';
+
+    var body = document.createElement('div');
+    body.className = 'acc-body';
+    if (ci !== 0) body.style.height = '0';
+
+    body.innerHTML = projs.map(function(p, i) {
+      return '<button class="project-banner" onclick="openProject(\'' + p.id + '\')">' +
+        '<div class="pb-thumb" style="background-image:url(\'' + p.image + '\')"></div>' +
+        '<span class="pb-num">' + String(i + 1).padStart(2, '0') + '</span>' +
+        '<div class="pb-body">' +
+          '<div class="pb-top">' +
+            '<span class="pb-name">' + p.name + '</span>' +
+            '<span class="pb-cat">' + p.categoryLabel.toUpperCase() + '</span>' +
+          '</div>' +
+          '<p class="pb-desc">' + p.description + '</p>' +
+          '<div class="pb-footer">' +
+            '<span class="pb-lang">' + p.language + '</span>' +
+            '<span class="pb-lang">' + p.updated + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="pb-action"><span class="pb-arrow">→</span></div>' +
+        '</button>';
+    }).join('');
+
+    header.addEventListener('click', function() {
+      var isOpen = acc.classList.contains('open');
+      // close all
+      container.querySelectorAll('.accordion').forEach(function(a) {
+        a.classList.remove('open');
+        a.querySelector('.acc-header').setAttribute('aria-expanded', 'false');
+        var b = a.querySelector('.acc-body');
+        b.style.height = b.scrollHeight + 'px';
+        requestAnimationFrame(function() { b.style.height = '0'; });
+      });
+      if (!isOpen) {
+        acc.classList.add('open');
+        header.setAttribute('aria-expanded', 'true');
+        body.style.height = '0';
+        requestAnimationFrame(function() {
+          body.style.height = body.scrollHeight + 'px';
+          setTimeout(function() { body.style.height = 'auto'; }, 320);
+        });
+      }
+    });
+
+    acc.appendChild(header);
+    acc.appendChild(body);
+    container.appendChild(acc);
+
+    // Open first by default
+    if (ci === 0) {
+      body.style.height = 'auto';
+    }
+  });
+})();
+
 /* ===== INIT ===== */
-renderProjects('all');
 
 /* ===== MUSIC PLAYER — Madness.zip (static, no fetch) ===== */
 const PLAYLIST = [
