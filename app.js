@@ -365,8 +365,8 @@ function onEsc(e) { if (e.key === 'Escape') closeModal(); }
    CATEGORY DEFINITIONS
 ═══════════════════════════════════════════════════════ */
 const CATEGORIES = [
-  { id: 'games',    label: 'Games' },
   { id: 'apps',     label: 'Apps' },
+  { id: 'games',    label: 'Games' },
   { id: 'trackers', label: 'Trackers' },
   { id: 'tools',    label: 'Tools' },
   { id: 'study',    label: 'Study' },
@@ -699,7 +699,7 @@ function floatUp(el, delay, dist, dur, done) {
   var loaderSvg= document.getElementById('cat-loader-svg');
   if (!tilesEl) return;
 
-  var currentCat = 'games';
+  var currentCat = 'apps';
   var animating   = false;
 
   function renderTiles(cat) {
@@ -775,7 +775,7 @@ function floatUp(el, delay, dist, dur, done) {
   });
 
   // Initial render
-  renderTiles('games');
+  renderTiles('apps');
   tilesEl.style.opacity = '1';
 })();
 
