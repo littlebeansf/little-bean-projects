@@ -152,6 +152,44 @@ const PROJECTS = [
     ]
   },
   {
+    id: 'sunfinder',
+    name: 'Sunfinder',
+    category: 'trackers',
+    categoryLabel: 'App',
+    description: 'Find the nearest sunny places from your location. Built for Lake Constance area where clouds never leave.',
+    github: 'https://github.com/littlebeansf/sunfinder',
+    pages: 'https://littlebeansf.github.io/sunfinder/',
+    image: 'img/sunfinder.png',
+    language: 'TypeScript',
+    isPrivate: false,
+    updated: '2026-05-19',
+    highlights: [
+      'Location-based sun finder',
+      'Built for Lake Constance area',
+      'Real-time weather data',
+      'Nearest sunny spot navigation'
+    ]
+  },
+  {
+    id: 'currency-chaos',
+    name: 'Currency Chaos',
+    category: 'trackers',
+    categoryLabel: 'Tool',
+    description: "The world's most irresponsible currency converter. Real money, fake money, space money.",
+    github: 'https://github.com/littlebeansf/currency-chaos',
+    pages: 'https://littlebeansf.github.io/currency-chaos/',
+    image: 'img/currency-chaos.png',
+    language: 'CSS',
+    isPrivate: false,
+    updated: '2026-05-19',
+    highlights: [
+      'Real + fake + space currencies',
+      'Irresponsible exchange rates',
+      'Convert anything to anything',
+      'Financial chaos guaranteed'
+    ]
+  },
+  {
     id: 'rhe-3d',
     name: 'rhe-3d',
     category: 'tools',
