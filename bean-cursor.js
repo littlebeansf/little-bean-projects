@@ -17,7 +17,8 @@
  *   4. ECHO PULSE    — 2 ghost rings expand outward and fade
  *   5. FRACTURE      — ring splits into 4 clones that scatter & reunite
  *
- * Colour: tracks CSS --color-text (white dark / near-black light)
+ * Colour: always pure #ffffff with mix-blend-mode:difference → inverts whatever
+ *   is underneath, always crisp black-on-light / white-on-dark without any JS.
  * Desktop / hover-capable only. localStorage forbidden → reads data-theme attr.
  */
 (function () {
@@ -25,12 +26,12 @@
   if (window.matchMedia('(hover: none)').matches) return;
 
   /* ─────────────────────────────────────────────
-     THEME
+     COLOUR
+     Always pure white — mix-blend-mode:difference
+     handles light/dark inversion automatically.
   ───────────────────────────────────────────── */
-  function col() {
-    return getComputedStyle(document.documentElement)
-      .getPropertyValue('--color-text').trim() || '#ffffff';
-  }
+  const CURSOR_COLOR = '#ffffff';
+  function col() { return CURSOR_COLOR; }
 
   /* ─────────────────────────────────────────────
      CONSTANTS
@@ -157,18 +158,8 @@
   cs.textContent = '* { cursor: none !important; }';
   document.head.appendChild(cs);
 
-  /* ─────────────────────────────────────────────
-     THEME RECOLOUR
-  ───────────────────────────────────────────── */
-  function recolor() {
-    const c = col();
-    dot.style.background  = c;
-    ring.style.borderColor = c;
-    g1.style.borderColor   = c;
-    g2.style.borderColor   = c;
-  }
-  new MutationObserver(recolor)
-    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  /* No theme recolour needed — cursor is always pure white with
+     mix-blend-mode:difference, which auto-inverts on any background. */
 
   /* ─────────────────────────────────────────────
      HELPERS
