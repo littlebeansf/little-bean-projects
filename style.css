@@ -1353,45 +1353,146 @@ p, li { text-wrap: pretty; }
 }
 .contact-card:hover .contact-arrow { color: var(--color-text); }
 
-/* ===== RESPONSIVE ===== */
+/* ==========================================================================
+   RESPONSIVE — mobile-first breakpoints
+   ≤860px  tablet     nav icons only
+   ≤640px  mobile     single column, stacked layouts
+   ≤480px  small phone extra tightening
+   ========================================================================== */
 
-/* Tablet & mobile nav: show icons, hide text labels */
+/* ── Tablet (≤860px): nav icons only, hide labels ── */
 @media (max-width: 860px) {
+  /* Nav: icon-only, evenly distribute buttons */
   .nav-icon  { display: block; }
   .nav-label { display: none; }
-  .nav-btn   { padding: 0 var(--space-3); }
-  /* Also shrink BMC button text on tablet */
+  .header-nav { gap: 0; }
+  .nav-btn   { padding: 0 var(--space-2); min-width: 44px; justify-content: center; }
+
+  /* BMC: icon only */
   .bmc-btn span { display: none; }
   .bmc-btn { padding: 6px 10px; }
-}
 
-@media (max-width: 768px) {
+  /* Header: tighter padding, prevent overflow */
+  .header-inner { padding: 0 var(--space-4); gap: var(--space-3); }
+
+  /* Tile grid: 2 columns */
   .tile-row { grid-template-columns: repeat(2, 1fr); }
   .tile-card { min-height: 180px; }
-  .music-layout { grid-template-columns: 1fr; }
+
+  /* Music: stack player above tracklist */
+  .music-layout { grid-template-columns: 1fr; gap: var(--space-6); }
   .player-panel { position: static; }
-  #view-music { padding: var(--space-6) var(--space-4) var(--space-12); }
+
+  /* Me: stack */
   .me-layout { grid-template-columns: 1fr; }
   .me-card { position: static; }
-  #view-me { padding: var(--space-6) var(--space-4) var(--space-12); }
-  .me-pillars { grid-template-columns: 1fr; }
-  .album-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Albums: 4-col → 3-col */
+  .album-grid { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* ── Mobile (≤640px): single column, all views ── */
 @media (max-width: 640px) {
-  .header-inner { padding: 0 var(--space-4); gap: var(--space-4); }
-  #view-dashboard, #view-projects { padding: var(--space-8) var(--space-4) var(--space-16); }
+  /* Prevent any horizontal scroll */
+  html, body { overflow-x: hidden; max-width: 100vw; }
+
+  /* Header: tighter, logo subtitle hidden to save space */
+  .header-inner { padding: 0 12px; gap: var(--space-2); height: 48px; }
+  .logo-projects { display: none; }
+  /* Logo can shrink on mobile so nav gets space */
+  .logo { flex-shrink: 1; min-width: 0; }
+  .logo-wordmark { font-size: 11px; }
+
+  /* Nav buttons: equal share of available space */
+  .header-nav { flex: 1; justify-content: flex-end; gap: 0; }
+  .nav-btn { padding: 0 8px; min-width: 36px; height: 48px; }
+  .nav-icon { width: 17px; height: 17px; }
+
+  /* Theme toggle: slightly smaller */
+  .theme-toggle { width: 28px; height: 28px; flex-shrink: 0; }
+
+  /* Views: safe bottom padding for floating buttons */
+  #view-dashboard,
+  #view-projects,
+  #view-music,
+  #view-me { padding: var(--space-6) 12px var(--space-16); }
+
+  /* Hero stats: wrap freely */
+  .hero-stats { flex-wrap: wrap; gap: var(--space-3); }
+  .stat-item { flex: 1 1 auto; min-width: 70px; }
+
+  /* Cat tabs: scrollable row, no wrap */
+  .cat-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .cat-tabs::-webkit-scrollbar { display: none; }
+  .cat-tab { flex-shrink: 0; padding: var(--space-2) 12px; font-size: 10px; gap: 4px; }
+  .cat-tab-icon { width: 14px; height: 14px; }
+  .cat-tab span { display: none; }   /* icon-only on small phones */
+  .cat-tab.active span { display: none; }
+
+  /* Tiles: single column */
   .tile-row { grid-template-columns: 1fr; }
   .tile-row--single { grid-template-columns: 1fr; }
-  .tile-card { min-height: 160px; }
-  .project-banner { grid-template-columns: 48px 1fr auto; }
-  .pb-thumb { width: 48px; height: 48px; }
+  .tile-card { min-height: 150px; }
+
+  /* Accordions */
+  .acc-header { padding: var(--space-3) 12px; font-size: 11px; }
+  .accordions { border-left: none; border-right: none; }
+
+  /* Project banners */
+  .project-banner { grid-template-columns: 44px 1fr auto; gap: 8px; padding: 10px 12px; }
+  .pb-thumb { width: 44px; height: 44px; }
   .pb-num { display: none; }
-  .modal-panel { margin: 0; max-height: 92vh; }
-  .modal-hero { height: 150px; }
-  .modal-body { padding: var(--space-5) var(--space-5) var(--space-6); }
-  .modal-grid { grid-template-columns: 1fr; }
-  .projects-header { flex-direction: column; align-items: flex-start; gap: var(--space-4); }
   .pb-desc { display: none; }
+  .pb-name { font-size: 11px; }
+
+  /* Modal */
+  .modal-panel { margin: 0; border-radius: 0; max-height: 94vh; width: 100%; }
+  .modal-hero { height: 140px; }
+  .modal-body { padding: var(--space-4) var(--space-4) var(--space-6); }
+  .modal-grid { grid-template-columns: 1fr; }
+
+  /* Projects header */
+  .projects-header { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+
+  /* Music: full-width player */
+  #view-music { padding: var(--space-5) 12px var(--space-16); }
+  .music-layout { gap: var(--space-5); }
+  .player-panel { padding: var(--space-4); }
+  .player-cover { max-width: 220px; margin: 0 auto; }
+  .player-controls { gap: var(--space-2); }
+  .player-btn { width: 32px; height: 32px; }
+  .player-btn--play { width: 44px; height: 44px; }
+  .track-list { max-height: 260px; overflow-y: auto; }
+  .album-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-2); }
+  .suno-strip { flex-direction: column; gap: var(--space-3); align-items: flex-start; }
+
+  /* Me view */
+  #view-me { padding: var(--space-5) 12px var(--space-16); }
+  .me-pillars { grid-template-columns: 1fr; }
+  .me-card { padding: var(--space-4); }
+  .me-avatar { width: 100%; max-width: 280px; margin: 0 auto; display: block; }
+
+  /* Back-to-top + BMC floating buttons: tighter */
+  #back-to-top { right: 76px; bottom: 16px; padding: 8px 10px; }
+  .bmc-widget-wrap, .bmcw, [data-name='BMC-Widget'] { bottom: 16px !important; right: 16px !important; }
+}
+
+/* ── Small phone (≤480px): extra tightening ── */
+@media (max-width: 480px) {
+  .logo-lb { font-size: 10px; padding: 2px 4px; }
+  .logo-dot { width: 4px; height: 4px; }
+  .hero-count { font-size: 22px; }
+  .tile-card { min-height: 130px; }
+  .album-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-2); }
+  .album-info { padding: var(--space-1) var(--space-2); }
+  .album-name { font-size: 10px; }
 }
 
 /* ============================================================
