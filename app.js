@@ -2,6 +2,205 @@
    LB.PROJECTS — App Logic v3
    ============================================================ */
 
+/* ═══════════════════════════════════════════════════════
+   INTERNATIONALISATION
+   Keys match data-i18n attributes in index.html.
+   Project descriptions/highlights are translated inline
+   via PROJECTS array entries keyed by language.
+═══════════════════════════════════════════════════════ */
+const TRANSLATIONS = {
+  en: {
+    nav_dashboard:    'Dashboard',
+    nav_projects:     'Projects',
+    nav_music:        'Music',
+    nav_me:           'Me',
+    bmc:              'Buy me a coffee',
+    hero_tagline:     'Thanks AI for creating literally everything you see here with me. I strongly believe a world where humans and AI collaborate might be the only way forward. Put love in the things you do.',
+    quick_access:     '// Quick Access',
+    cat_apps:         'Apps',
+    cat_games:        'Games',
+    cat_trackers:     'Trackers',
+    cat_tools:        'Tools',
+    cat_study:        'Study',
+    cat_music:        'Music',
+    all_projects:     'All_Projects',
+    view_profile:     'View Profile ↗',
+    albums_label:     '// ALBUMS',
+    tracklist_label:  '// MADNESS.ZIP',
+    about_label:      '// ABOUT',
+    me_bio:           'Hi, I\'m Sebastian — born in Italy, half German, half Austrian, living in Switzerland. I create things: music, software, art. By day I work as an IT Workplace Engineer. By night I\'m building games, trackers, tools, and beats that nobody asked for but everybody secretly needs.',
+    what_i_do_label:  '// WHAT I DO',
+    pillar_it_name:   'IT Workplace Engineer',
+    pillar_it_desc:   'Enterprise IT, Switzerland',
+    pillar_dev_name:  'Developer',
+    pillar_dev_desc:  'Games, apps, creative tools',
+    pillar_music_name:'Music Producer',
+    pillar_music_desc:'Hard techno & electronic',
+    pillar_art_name:  'Artist',
+    pillar_art_desc:  'Drawing & digital art',
+    hobbies_label:    '// HOBBIES',
+    find_me_label:    '// FIND ME',
+    contact_business: 'Business Inquiries',
+    // Modal tabs
+    modal_tab_about:       'About',
+    modal_tab_tech:        'Tech',
+    modal_tab_highlights:  'Highlights',
+    modal_open_site:       'Open Live Site',
+    modal_view_github:     'View on GitHub',
+    meta_language:         'Language',
+    meta_visibility:       'Visibility',
+    meta_updated:          'Last Updated',
+    meta_category:         'Category',
+    highlights_label:      '// Highlights',
+    // Accordion labels
+    acc_study:    'Study',
+    acc_games:    'Games',
+    acc_apps:     'Apps',
+    acc_trackers: 'Trackers',
+    acc_tools:    'Tools',
+    acc_music:    'Music',
+  },
+  de: {
+    nav_dashboard:    'Dashboard',
+    nav_projects:     'Projekte',
+    nav_music:        'Musik',
+    nav_me:           'Ich',
+    bmc:              'Kauf mir einen Kaffee',
+    hero_tagline:     'Danke KI, dass du buchstäblich alles, was du hier siehst, mit mir erschaffen hast. Ich glaube fest daran, dass eine Welt, in der Menschen und KI zusammenarbeiten, vielleicht der einzige Weg nach vorne ist. Steck Liebe in das, was du tust.',
+    quick_access:     '// Schnellzugriff',
+    cat_apps:         'Apps',
+    cat_games:        'Spiele',
+    cat_trackers:     'Tracker',
+    cat_tools:        'Werkzeuge',
+    cat_study:        'Lernen',
+    cat_music:        'Musik',
+    all_projects:     'Alle_Projekte',
+    view_profile:     'Profil ansehen ↗',
+    albums_label:     '// ALBEN',
+    tracklist_label:  '// MADNESS.ZIP',
+    about_label:      '// ÜBER MICH',
+    me_bio:           'Hi, ich bin Sebastian — geboren in Italien, halb Deutsch, halb Österreichisch, wohnhaft in der Schweiz. Ich erschaffe Dinge: Musik, Software, Kunst. Tagsüber arbeite ich als IT Workplace Engineer. Nachts baue ich Spiele, Tracker, Tools und Beats, die niemand bestellt hat, aber alle heimlich brauchen.',
+    what_i_do_label:  '// WAS ICH MACHE',
+    pillar_it_name:   'IT Workplace Engineer',
+    pillar_it_desc:   'Enterprise IT, Schweiz',
+    pillar_dev_name:  'Entwickler',
+    pillar_dev_desc:  'Spiele, Apps, kreative Tools',
+    pillar_music_name:'Musikproduzent',
+    pillar_music_desc:'Hard Techno & Elektronik',
+    pillar_art_name:  'Künstler',
+    pillar_art_desc:  'Zeichnen & digitale Kunst',
+    hobbies_label:    '// HOBBYS',
+    find_me_label:    '// FINDE MICH',
+    contact_business: 'Geschäftsanfragen',
+    modal_tab_about:       'Info',
+    modal_tab_tech:        'Technik',
+    modal_tab_highlights:  'Highlights',
+    modal_open_site:       'Live-Seite öffnen',
+    modal_view_github:     'Auf GitHub ansehen',
+    meta_language:         'Sprache',
+    meta_visibility:       'Sichtbarkeit',
+    meta_updated:          'Zuletzt aktualisiert',
+    meta_category:         'Kategorie',
+    highlights_label:      '// Highlights',
+    acc_study:    'Lernen',
+    acc_games:    'Spiele',
+    acc_apps:     'Apps',
+    acc_trackers: 'Tracker',
+    acc_tools:    'Werkzeuge',
+    acc_music:    'Musik',
+  },
+  it: {
+    nav_dashboard:    'Dashboard',
+    nav_projects:     'Progetti',
+    nav_music:        'Musica',
+    nav_me:           'Chi sono',
+    bmc:              'Offrimi un caffè',
+    hero_tagline:     'Grazie AI per aver creato con me letteralmente tutto quello che vedi qui. Credo fermamente che un mondo in cui esseri umani e AI collaborano potrebbe essere l\'unica via avanti. Metti amore in quello che fai.',
+    quick_access:     '// Accesso Rapido',
+    cat_apps:         'App',
+    cat_games:        'Giochi',
+    cat_trackers:     'Tracker',
+    cat_tools:        'Strumenti',
+    cat_study:        'Studio',
+    cat_music:        'Musica',
+    all_projects:     'Tutti_i_Progetti',
+    view_profile:     'Vedi Profilo ↗',
+    albums_label:     '// ALBUM',
+    tracklist_label:  '// MADNESS.ZIP',
+    about_label:      '// CHI SONO',
+    me_bio:           'Ciao, sono Sebastian — nato in Italia, metà tedesco, metà austriaco, vivo in Svizzera. Creo cose: musica, software, arte. Di giorno lavoro come IT Workplace Engineer. Di notte costruisco giochi, tracker, strumenti e beat che nessuno ha chiesto ma di cui tutti hanno segretamente bisogno.',
+    what_i_do_label:  '// COSA FACCIO',
+    pillar_it_name:   'IT Workplace Engineer',
+    pillar_it_desc:   'IT aziendale, Svizzera',
+    pillar_dev_name:  'Sviluppatore',
+    pillar_dev_desc:  'Giochi, app, strumenti creativi',
+    pillar_music_name:'Produttore Musicale',
+    pillar_music_desc:'Hard techno & elettronica',
+    pillar_art_name:  'Artista',
+    pillar_art_desc:  'Disegno & arte digitale',
+    hobbies_label:    '// HOBBY',
+    find_me_label:    '// TROVAMI',
+    contact_business: 'Richieste commerciali',
+    modal_tab_about:       'Info',
+    modal_tab_tech:        'Tecnica',
+    modal_tab_highlights:  'Highlights',
+    modal_open_site:       'Apri il sito',
+    modal_view_github:     'Vedi su GitHub',
+    meta_language:         'Linguaggio',
+    meta_visibility:       'Visibilità',
+    meta_updated:          'Ultimo aggiornamento',
+    meta_category:         'Categoria',
+    highlights_label:      '// Highlights',
+    acc_study:    'Studio',
+    acc_games:    'Giochi',
+    acc_apps:     'App',
+    acc_trackers: 'Tracker',
+    acc_tools:    'Strumenti',
+    acc_music:    'Musica',
+  }
+};
+
+let CURRENT_LANG = 'en';
+
+function setLang(lang) {
+  if (!TRANSLATIONS[lang]) return;
+  CURRENT_LANG = lang;
+  const t = TRANSLATIONS[lang];
+
+  // Swap all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+
+  // Update lang switcher active state
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+
+  // Set html lang attribute
+  document.documentElement.lang = lang;
+
+  // Re-render JS-generated content that has translatable strings
+  // (accordions use category labels; re-render if projects view visible)
+  var accEl = document.getElementById('accordions');
+  if (accEl && accEl.innerHTML !== '') renderAccordions();
+
+  // Re-render tile desc labels (cat tabs)
+  var tilesEl = document.getElementById('cat-tiles');
+  if (tilesEl && tilesEl.innerHTML !== '') {
+    var activeCat = (document.querySelector('.cat-tab.active') || {}).dataset && document.querySelector('.cat-tab.active').dataset.cat;
+    if (activeCat) renderTiles(activeCat);
+  }
+}
+
+// Wire lang switcher on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { setLang(btn.dataset.lang); });
+  });
+});
+
 const PROJECTS = [
   {
     id: 'gwunt',
@@ -303,6 +502,7 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
 function openProject(id) {
   const p = PROJECTS.find(x => x.id === id);
   if (!p) return;
+  const t = TRANSLATIONS[CURRENT_LANG] || TRANSLATIONS.en;
 
   document.getElementById('modalContent').innerHTML = `
     <div class="modal-hero" style="background-image:url('${p.image}')">
@@ -314,9 +514,9 @@ function openProject(id) {
     </div>
     <div class="modal-body">
       <div class="modal-tabs">
-        <button class="modal-tab active" data-tab="about">About</button>
-        <button class="modal-tab" data-tab="tech">Tech</button>
-        <button class="modal-tab" data-tab="highlights">Highlights</button>
+        <button class="modal-tab active" data-tab="about">${t.modal_tab_about}</button>
+        <button class="modal-tab" data-tab="tech">${t.modal_tab_tech}</button>
+        <button class="modal-tab" data-tab="highlights">${t.modal_tab_highlights}</button>
       </div>
 
       <div class="modal-tab-panel active" data-panel="about">
@@ -324,11 +524,11 @@ function openProject(id) {
         <div class="modal-actions">
           ${p.pages ? `<a href="${p.pages}" target="_blank" rel="noopener" class="btn-primary">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            Open Live Site
+            ${t.modal_open_site}
           </a>` : ''}
           <a href="${p.github}" target="_blank" rel="noopener" class="btn-secondary">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            View on GitHub
+            ${t.modal_view_github}
           </a>
         </div>
       </div>
@@ -336,19 +536,19 @@ function openProject(id) {
       <div class="modal-tab-panel" data-panel="tech">
         <div class="modal-grid">
           <div class="modal-meta-cell">
-            <div class="meta-key">Language</div>
+            <div class="meta-key">${t.meta_language}</div>
             <div class="meta-val">${p.language}</div>
           </div>
           <div class="modal-meta-cell">
-            <div class="meta-key">Visibility</div>
+            <div class="meta-key">${t.meta_visibility}</div>
             <div class="meta-val">${p.isPrivate ? 'PRIVATE' : 'PUBLIC'}</div>
           </div>
           <div class="modal-meta-cell">
-            <div class="meta-key">Last Updated</div>
+            <div class="meta-key">${t.meta_updated}</div>
             <div class="meta-val">${p.updated}</div>
           </div>
           <div class="modal-meta-cell">
-            <div class="meta-key">Category</div>
+            <div class="meta-key">${t.meta_category}</div>
             <div class="meta-val">${p.categoryLabel.toUpperCase()}</div>
           </div>
         </div>
@@ -803,27 +1003,29 @@ function floatUp(el, delay, dist, dur, done) {
 })();
 
 /* ═══════════════════════════════════════════════════════
-   ACCORDIONS — Projects View
+   ACCORDIONS — Projects View (global so setLang can re-render)
 ═══════════════════════════════════════════════════════ */
-(function() {
+function renderAccordions() {
   var container = document.getElementById('accordions');
   if (!container) return;
-
-  var openId = null; // only one open at a time
+  container.innerHTML = '';
+  var t = TRANSLATIONS[CURRENT_LANG] || TRANSLATIONS.en;
 
   CATEGORIES.forEach(function(cat, ci) {
     var projs = PROJECTS.filter(function(p) { return p.category === cat.id; });
     if (!projs.length) return;
 
+    // Get translated category label
+    var catLabel = (t['acc_' + cat.id] || cat.label).toUpperCase();
+
     var acc = document.createElement('div');
     acc.className = 'accordion' + (ci === 0 ? ' open' : '');
-    if (ci === 0) openId = cat.id;
 
     var header = document.createElement('button');
     header.className = 'acc-header';
     header.setAttribute('aria-expanded', ci === 0 ? 'true' : 'false');
     header.innerHTML =
-      '<span class="acc-label">' + cat.label.toUpperCase() + '</span>' +
+      '<span class="acc-label">' + catLabel + '</span>' +
       '<span class="acc-count">' + projs.length + '</span>' +
       '<svg class="acc-arrow" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,6 8,10 12,6"/></svg>';
 
@@ -852,7 +1054,6 @@ function floatUp(el, delay, dist, dur, done) {
 
     header.addEventListener('click', function() {
       var isOpen = acc.classList.contains('open');
-      // close all
       container.querySelectorAll('.accordion').forEach(function(a) {
         a.classList.remove('open');
         a.querySelector('.acc-header').setAttribute('aria-expanded', 'false');
@@ -874,13 +1075,10 @@ function floatUp(el, delay, dist, dur, done) {
     acc.appendChild(header);
     acc.appendChild(body);
     container.appendChild(acc);
-
-    // Open first by default
-    if (ci === 0) {
-      body.style.height = 'auto';
-    }
+    if (ci === 0) body.style.height = 'auto';
   });
-})();
+}
+renderAccordions();
 
 /* ===== INIT ===== */
 

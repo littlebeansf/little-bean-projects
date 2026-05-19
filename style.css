@@ -273,6 +273,37 @@ p, li { text-wrap: pretty; }
   .btt-label { display: none; }
   #back-to-top { right: 84px; padding: 8px 10px; }
 }
+/* ===== LANGUAGE SWITCHER ===== */
+.lang-switcher {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.lang-btn {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  padding: 3px 6px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: color var(--transition), border-color var(--transition);
+  line-height: 1.4;
+}
+.lang-btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+.lang-btn.active {
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
 .theme-toggle {
   margin-left: auto;
   width: 32px;
@@ -1417,6 +1448,9 @@ p, li { text-wrap: pretty; }
   .bmc-btn span { display: none; }
   .bmc-btn { padding: 6px 10px; }
 
+  /* Lang switcher: smaller padding at tablet */
+  .lang-btn { padding: 2px 5px; font-size: 9px; }
+
   /* Header: tighter padding, prevent overflow */
   .header-inner { padding: 0 var(--space-4); gap: var(--space-3); }
 
@@ -1455,6 +1489,10 @@ p, li { text-wrap: pretty; }
 
   /* Theme toggle: slightly smaller */
   .theme-toggle { width: 28px; height: 28px; flex-shrink: 0; }
+
+  /* Lang switcher: very compact on mobile, no overflow */
+  .lang-switcher { gap: 1px; flex-shrink: 0; }
+  .lang-btn { padding: 2px 4px; font-size: 9px; border-radius: 2px; }
 
   /* Views: safe bottom padding for floating buttons */
   #view-dashboard,
