@@ -79,7 +79,7 @@ const PROJECTS = [
   },
   {
     id: 'sip-and-spill',
-    name: 'Sip & Spill',
+    name: 'sip-and-spill',
     category: 'games',
     categoryLabel: 'Game',
     description: 'A round-based drinking game for any two players — warm-up, spicy, and extreme zones with mini-games.',
@@ -153,7 +153,7 @@ const PROJECTS = [
   },
   {
     id: 'sunfinder',
-    name: 'Sunfinder',
+    name: 'sunfinder',
     category: 'apps',
     categoryLabel: 'App',
     description: 'Find the nearest sunny places from your location. Built for Lake Constance area where clouds never leave.',
@@ -172,7 +172,7 @@ const PROJECTS = [
   },
   {
     id: 'currency-chaos',
-    name: 'Currency Chaos',
+    name: 'currency-chaos',
     category: 'apps',
     categoryLabel: 'App',
     description: "The world's most irresponsible currency converter. Real money, fake money, space money.",
@@ -247,7 +247,7 @@ const PROJECTS = [
   },
   {
     id: 'you-dont-have-to-use-your-brain',
-    name: 'You Don\'t Have to Use Your Brain',
+    name: 'you-dont-have-to-use-your-brain',
     category: 'study',
     categoryLabel: 'Study',
     description: 'A curated UI/UX learning library — Fitts\' Law, Hick\'s Law, Gestalt principles, and more. Don\'t make the user think.',
