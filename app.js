@@ -377,20 +377,20 @@ const CATEGORIES = [
    CATEGORY TILE DATA (for Quick Access)
 ═══════════════════════════════════════════════════════ */
 const TILE_DATA = {
-  'gwunt':                       { pages: 'https://littlebeansf.github.io/gwunt/',                        desc: 'Myth card battler · 6 factions · AI opponent' },
-  'couch-quest':                 { pages: 'https://littlebeansf.github.io/couch-quest/',                  desc: 'Party card game · Mobile-first' },
-  'dealer-life-simulator':       { pages: 'https://littlebeansf.github.io/dealer-life-simulator/',        desc: 'Fantasy life sim · choices · fate' },
-  'it-clicker':                  { pages: 'https://littlebeansf.github.io/it-clicker/',                   desc: 'IT idle clicker · Help desk chaos' },
-  'sip-and-spill':               { pages: 'https://littlebeansf.github.io/sip-and-spill/',                desc: 'Drinking game · rounds · mini-games' },
-  'sunfinder':                   { pages: 'https://littlebeansf.github.io/sunfinder/',                    desc: 'Sun locator · Lake Constance' },
-  'currency-chaos':              { pages: 'https://littlebeansf.github.io/currency-chaos/',               desc: 'Cursed converter · real + fake + space money' },
-  'framestack':                  { pages: 'https://littlebeansf.github.io/framestack/',                   desc: 'Media universe tracker' },
-  'cardvault':                   { pages: 'https://littlebeansf.github.io/cardvault/',                    desc: 'Card collection · React + SQLite' },
-  'hunter-system':               { pages: 'https://littlebeansf.github.io/hunter-system/',                desc: 'Life RPG · habits · XP · rank up' },
-  'rhe-3d':                      { pages: 'https://littlebeansf.github.io/rhe-3d/',                       desc: 'Image to 3D · STL · OBJ · GLB export' },
-  'stringcraft':                 { pages: 'https://littlebeansf.github.io/stringcraft/',                  desc: 'String art planner · 2D + 3D' },
-  'you-dont-have-to-use-your-brain': { pages: 'https://littlebeansf.github.io/you-dont-have-to-use-your-brain/', desc: "UX laws library · Fitts · Hick's · Gestalt" },
-  'hard-techno-dj-academy':      { pages: 'https://littlebeansf.github.io/hard-techno-dj-academy/',      desc: 'DJ learning app · genres · mixing · beats' },
+  'gwunt':                       { pages: 'https://littlebeansf.github.io/gwunt/',                        desc: 'Card battle with mythology factions' },
+  'couch-quest':                 { pages: 'https://littlebeansf.github.io/couch-quest/',                  desc: 'Party card game for lazy nights' },
+  'dealer-life-simulator':       { pages: 'https://littlebeansf.github.io/dealer-life-simulator/',        desc: 'A goblin deals your fate' },
+  'it-clicker':                  { pages: 'https://littlebeansf.github.io/it-clicker/',                   desc: 'Survive the IT help desk' },
+  'sip-and-spill':               { pages: 'https://littlebeansf.github.io/sip-and-spill/',                desc: 'Drinking game, escalating rounds' },
+  'sunfinder':                   { pages: 'https://littlebeansf.github.io/sunfinder/',                    desc: 'Find the sun from where you are' },
+  'currency-chaos':              { pages: 'https://littlebeansf.github.io/currency-chaos/',               desc: 'Convert anything into anything' },
+  'framestack':                  { pages: 'https://littlebeansf.github.io/framestack/',                   desc: 'Track what you watch and read' },
+  'cardvault':                   { pages: 'https://littlebeansf.github.io/cardvault/',                    desc: 'Log your physical card collection' },
+  'hunter-system':               { pages: 'https://littlebeansf.github.io/hunter-system/',                desc: 'Gamify your daily habits' },
+  'rhe-3d':                      { pages: 'https://littlebeansf.github.io/rhe-3d/',                       desc: 'Turn images into 3D prints' },
+  'stringcraft':                 { pages: 'https://littlebeansf.github.io/stringcraft/',                  desc: 'Plan string art before the nails' },
+  'you-dont-have-to-use-your-brain': { pages: 'https://littlebeansf.github.io/you-dont-have-to-use-your-brain/', desc: 'UX principles, explained simply' },
+  'hard-techno-dj-academy':      { pages: 'https://littlebeansf.github.io/hard-techno-dj-academy/',      desc: 'Learn hard techno, feel the BPM' },
 };
 
 /* ═══════════════════════════════════════════════════════
