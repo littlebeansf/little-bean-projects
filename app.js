@@ -43,7 +43,7 @@ const PROJECTS = [
   },
   {
     id: 'dealer-life-simulator',
-    name: 'The Goblin\'s Deal',
+    name: 'dealer-life-simulator',
     category: 'games',
     categoryLabel: 'Game',
     description: 'A shady goblin dealer offers you a hand. Navigate choices, gamble your fate, and see where your decisions take you in this fantasy life sim.',
