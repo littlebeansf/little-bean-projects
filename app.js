@@ -448,6 +448,26 @@ const PROJECTS = [
     ]
   },
   {
+    id: 'wisdom-pack',
+    name: 'wisdom-pack',
+    category: 'study',
+    categoryLabel: 'Study',
+    description: 'TCG-style daily quote app. Open 10 packs a day and collect wisdom from philosophers, thinkers, and history.',
+    github: 'https://github.com/littlebeansf/wisdom-pack',
+    pages: 'https://littlebeansf.github.io/wisdom-pack/',
+    image: 'img/wisdom-pack.png',
+    language: 'TypeScript',
+    isPrivate: false,
+    updated: '2026-05-20',
+    highlights: [
+      'Daily 10-pack limit for mindful collecting',
+      'Quotes from philosophers & thinkers',
+      'TCG card opening mechanic',
+      'Collection tracker',
+      'Rarity system'
+    ]
+  },
+  {
     id: 'you-dont-have-to-use-your-brain',
     name: 'you-dont-have-to-use-your-brain',
     category: 'study',
@@ -615,6 +635,7 @@ const TILE_DATA = {
   'hunter-system':               { pages: 'https://littlebeansf.github.io/hunter-system/',                desc: 'Gamify your daily habits' },
   'rhe-3d':                      { pages: 'https://littlebeansf.github.io/rhe-3d/',                       desc: 'Turn images into 3D prints' },
   'stringcraft':                 { pages: 'https://littlebeansf.github.io/stringcraft/',                  desc: 'Plan string art before the nails' },
+  'wisdom-pack':                     { pages: 'https://littlebeansf.github.io/wisdom-pack/', desc: 'Collect wisdom like trading cards' },
   'you-dont-have-to-use-your-brain': { pages: 'https://littlebeansf.github.io/you-dont-have-to-use-your-brain/', desc: 'UX principles, explained simply' },
   'hard-techno-dj-academy':      { pages: 'https://littlebeansf.github.io/hard-techno-dj-academy/',      desc: 'Learn hard techno, feel the BPM' },
 };
