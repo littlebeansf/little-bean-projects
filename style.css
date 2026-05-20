@@ -552,13 +552,18 @@ p, li { text-wrap: pretty; }
   letter-spacing: 0.06em;
 }
 
-/* ===== ALL PROJECTS VIEW ===== */
-#view-projects {
+/* ===== SHARED VIEW OUTER CONTAINER ===== */
+/* All main views (projects, music, me) share the same outer shell */
+#view-projects,
+#view-music,
+#view-me {
   max-width: var(--content-max);
   margin: 0 auto;
   padding: var(--space-12) var(--space-6) var(--space-20);
 }
-.projects-header {
+
+/* Shared view title header (replaces projects-header / projects-title) */
+.view-header {
   padding-bottom: var(--space-8);
   border-bottom: 1px solid var(--color-border);
   margin-bottom: var(--space-8);
@@ -568,7 +573,7 @@ p, li { text-wrap: pretty; }
   flex-wrap: wrap;
   gap: var(--space-4);
 }
-.projects-title {
+.view-title {
   font-family: var(--font-mono);
   font-size: var(--text-2xl);
   font-weight: 700;
@@ -953,7 +958,7 @@ p, li { text-wrap: pretty; }
 .btn-secondary:hover { border-color: var(--color-text); }
 
 /* ===== ME VIEW ===== */
-#view-me { padding: var(--space-8) var(--space-10) var(--space-16); }
+/* #view-me padding now handled by shared view rule above */
 .me-layout {
   display: grid;
   grid-template-columns: 260px 1fr;
@@ -1104,7 +1109,7 @@ p, li { text-wrap: pretty; }
 }
 
 /* ===== MUSIC VIEW ===== */
-#view-music { padding: var(--space-8) var(--space-10) var(--space-16); }
+/* #view-music padding now handled by shared view rule above */
 .music-layout {
   display: grid;
   grid-template-columns: 300px 1fr;
@@ -1496,11 +1501,10 @@ p, li { text-wrap: pretty; }
   .lang-switcher { gap: 1px; flex-shrink: 0; }
   .lang-btn { padding: 2px 4px; font-size: 9px; border-radius: 2px; }
 
-  /* Views: safe bottom padding for floating buttons */
-  #view-dashboard,
+  /* Views: shared padding on mobile */
   #view-projects,
   #view-music,
-  #view-me { padding: var(--space-6) 12px var(--space-16); }
+  #view-me { padding: var(--space-6) 16px var(--space-16); }
 
   /* Hero: shrink title and collapse stats to one tight row */
   .hero { padding-bottom: var(--space-5); margin-bottom: var(--space-5); }
@@ -1549,11 +1553,11 @@ p, li { text-wrap: pretty; }
   .modal-grid { grid-template-columns: 1fr 1fr; }
   .hero-tagline { font-size: 11px; margin-top: var(--space-3); }
 
-  /* Projects header */
-  .projects-header { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+  /* Shared view header — stack on mobile */
+  .view-header { flex-direction: column; align-items: flex-start; gap: var(--space-3); padding-bottom: var(--space-5); margin-bottom: var(--space-5); }
 
   /* Music: full-width player */
-  #view-music { padding: var(--space-5) 12px var(--space-16); }
+  /* music mobile padding: shared rule handles it */
   .music-layout { gap: var(--space-5); }
   .player-panel { padding: var(--space-4); }
   .player-cover { max-width: 220px; margin: 0 auto; }
@@ -1565,7 +1569,7 @@ p, li { text-wrap: pretty; }
   .suno-strip { flex-direction: column; gap: var(--space-3); align-items: flex-start; }
 
   /* Me view */
-  #view-me { padding: var(--space-5) 12px var(--space-16); }
+  /* me mobile padding: shared rule handles it */
   .me-pillars { grid-template-columns: 1fr; }
   .me-card { padding: var(--space-4); }
   .me-avatar { width: 100%; max-width: 280px; margin: 0 auto; display: block; }
@@ -2101,8 +2105,6 @@ p, li { text-wrap: pretty; }
   grid-template-columns: 260px 1fr;
   gap: var(--space-10);
   align-items: start;
-  max-width: var(--content-max);
-  padding: var(--space-10) var(--space-8);
 }
 
 /* Left sticky card (player in Music, profile in Me) */
@@ -2334,7 +2336,6 @@ a.album-tile:hover .album-tile-cover { border-color: var(--color-text); }
   .view-inner {
     grid-template-columns: 1fr;
     gap: var(--space-6);
-    padding: var(--space-6) var(--space-4);
   }
   .view-card {
     position: static;
@@ -2349,7 +2350,6 @@ a.album-tile:hover .album-tile-cover { border-color: var(--color-text); }
 
 @media (max-width: 640px) {
   .view-inner {
-    padding: var(--space-4) var(--space-3);
     gap: var(--space-5);
   }
   .album-grid {
