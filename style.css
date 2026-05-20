@@ -2091,3 +2091,274 @@ p, li { text-wrap: pretty; }
 /* .filter-tabs and .filter-btn are no longer rendered — styles kept but
    effectively dead since no matching HTML exists */
 
+
+/* ==========================================================================
+   SHARED VIEW SKELETON — view-inner / view-card / view-main
+   Used by Music and Me views for uniform layout
+   ========================================================================== */
+.view-inner {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: var(--space-10);
+  align-items: start;
+  max-width: var(--content-max);
+  padding: var(--space-10) var(--space-8);
+}
+
+/* Left sticky card (player in Music, profile in Me) */
+.view-card {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-6));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  border: 1px solid var(--color-border);
+  padding: var(--space-5);
+  background: var(--color-surface);
+}
+
+/* Small util link inside view-card (View Profile, etc.) */
+.view-card-link {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  align-self: flex-end;
+  transition: color var(--transition);
+}
+.view-card-link:hover { color: var(--color-text); }
+
+/* Right content area */
+.view-main {
+  min-width: 0;
+}
+
+/* ==========================================================================
+   ALBUM TILES — compact square grid (replaces tall album-card)
+   ========================================================================== */
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.album-tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--color-text);
+  cursor: default;
+}
+a.album-tile { cursor: pointer; }
+a.album-tile:hover .album-tile-cover { border-color: var(--color-text); }
+
+.album-tile-cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--color-border);
+  border: 1px solid var(--color-border);
+  transition: border-color var(--transition);
+}
+
+.album-tile--active .album-tile-cover {
+  border-color: var(--color-text);
+  box-shadow: 0 0 0 1px var(--color-text);
+}
+
+.album-tile-title {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.album-tile--active .album-tile-title { color: var(--color-text); }
+
+/* ==========================================================================
+   SUNO PROFILE STRIP — inside view-card
+   ========================================================================== */
+.suno-profile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.suno-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+}
+.suno-profile-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.suno-handle {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 0.04em;
+}
+.suno-tagline {
+  font-size: 10px;
+  color: var(--color-text-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==========================================================================
+   SPEND BUTTON — replaces BMC nav link
+   ========================================================================== */
+.spend-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--color-text);
+  color: var(--color-bg);
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity var(--transition), transform 0.18s ease;
+  position: relative;
+}
+.spend-btn:hover { opacity: 0.85; }
+.spend-btn.open {
+  transform: scale(0.95);
+  opacity: 0.9;
+}
+
+/* ==========================================================================
+   SPEND POPOVER
+   ========================================================================== */
+.spend-popover {
+  position: fixed;
+  z-index: 1200;
+  top: 60px;
+  right: 20px;
+  width: 240px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  /* hidden state */
+  opacity: 0;
+  transform: translateY(-6px) scale(0.97);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.spend-popover.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+.spend-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  text-decoration: none;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+  transition: background var(--transition);
+}
+.spend-option:last-child { border-bottom: none; }
+.spend-option:hover { background: var(--color-bg); }
+
+.spend-option-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.spend-option-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.spend-option-name {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+}
+.spend-option-sub {
+  font-size: 10px;
+  color: var(--color-text-faint);
+}
+.spend-option-arrow {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+/* Muted option (BMC - follow only) */
+.spend-option--muted .spend-option-name,
+.spend-option--muted .spend-option-arrow { color: var(--color-text-muted); }
+.spend-option--muted .spend-option-icon { opacity: 0.5; }
+
+/* ==========================================================================
+   RESPONSIVE — view-inner at ≤860px (tablet): stack vertically
+   ========================================================================== */
+@media (max-width: 860px) {
+  .view-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    padding: var(--space-6) var(--space-4);
+  }
+  .view-card {
+    position: static;
+  }
+  .album-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  /* spend btn: icon only on tablet */
+  .spend-label { display: none; }
+  .spend-btn { padding: 6px 10px; }
+}
+
+@media (max-width: 640px) {
+  .view-inner {
+    padding: var(--space-4) var(--space-3);
+    gap: var(--space-5);
+  }
+  .album-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-2);
+  }
+  .album-tile-title { font-size: 8px; }
+  .spend-popover {
+    right: var(--space-3);
+    width: calc(100vw - 2 * var(--space-3));
+  }
+}

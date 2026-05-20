@@ -15,6 +15,7 @@ const TRANSLATIONS = {
     nav_music:        'Music',
     nav_me:           'Me',
     bmc:              'Buy me a coffee',
+    spend:            'Spend',
     hero_tagline:     'Thanks AI for creating literally everything you see here with me. I strongly believe a world where humans and AI collaborate might be the only way forward. Put love in the things you do.',
     quick_access:     '// Quick Access',
     cat_apps:         'Apps',
@@ -66,6 +67,7 @@ const TRANSLATIONS = {
     nav_music:        'Musik',
     nav_me:           'Ich',
     bmc:              'Kauf mir einen Kaffee',
+    spend:            'Spenden',
     hero_tagline:     'Danke KI, dass du buchstäblich alles, was du hier siehst, mit mir erschaffen hast. Ich glaube fest daran, dass eine Welt, in der Menschen und KI zusammenarbeiten, vielleicht der einzige Weg nach vorne ist. Steck Liebe in das, was du tust.',
     quick_access:     '// Schnellzugriff',
     cat_apps:         'Apps',
@@ -115,6 +117,7 @@ const TRANSLATIONS = {
     nav_music:        'Musica',
     nav_me:           'Chi sono',
     bmc:              'Offrimi un caffè',
+    spend:            'Donazione',
     hero_tagline:     'Grazie AI per aver creato con me letteralmente tutto quello che vedi qui. Credo fermamente che un mondo in cui esseri umani e AI collaborano potrebbe essere l\'unica via avanti. Metti amore in quello che fai.',
     quick_access:     '// Accesso Rapido',
     cat_apps:         'App',
@@ -1230,3 +1233,43 @@ buildTracklist();
 loadTrack(0, false);
 
 /* Madness.zip is the one and only static playlist — no fetch needed */
+
+/* ===== SPEND BUTTON — toggle popover ===== */
+document.addEventListener('DOMContentLoaded', function() {
+(function() {
+  var btn = document.getElementById('spend-btn');
+  var pop = document.getElementById('spend-popover');
+  if (!btn || !pop) return;
+
+  function openPop() {
+    btn.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+    pop.classList.add('open');
+    pop.removeAttribute('aria-hidden');
+  }
+
+  function closePop() {
+    btn.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    pop.classList.remove('open');
+    pop.setAttribute('aria-hidden', 'true');
+  }
+
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    pop.classList.contains('open') ? closePop() : openPop();
+  });
+
+  // Close on outside click
+  document.addEventListener('click', function(e) {
+    if (!pop.contains(e.target) && e.target !== btn) {
+      closePop();
+    }
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closePop();
+  });
+})();
+});
