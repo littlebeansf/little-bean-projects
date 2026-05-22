@@ -2362,3 +2362,171 @@ a.album-tile:hover .album-tile-cover { border-color: var(--color-text); }
     width: calc(100vw - 2 * var(--space-3));
   }
 }
+
+/* ==========================================================================
+   MUSIC VIEW — album row + tracklist + embed
+   ========================================================================== */
+
+/* Header link (small, right-aligned) */
+.view-header-link {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  align-self: flex-end;
+  transition: color var(--transition);
+}
+.view-header-link:hover { color: var(--color-text); }
+
+/* Album selector row */
+.music-albums {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+.music-album-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: none;
+  border: 1px solid var(--color-border);
+  padding: var(--space-3);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--transition), background var(--transition);
+  flex: 1;
+  min-width: 0;
+}
+.music-album-btn:hover {
+  border-color: var(--color-text-muted);
+  background: var(--color-surface);
+}
+.music-album-btn.active {
+  border-color: var(--color-text);
+  background: var(--color-surface);
+}
+.music-album-cover {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+}
+.music-album-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.music-album-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.music-album-meta {
+  font-size: 10px;
+  color: var(--color-text-faint);
+}
+
+/* Body: tracklist left + embed right */
+.music-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+/* Tracklist */
+.music-tracklist {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+}
+.music-track-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--transition);
+}
+.music-track-btn:last-child { border-bottom: none; }
+.music-track-btn:hover { background: var(--color-surface); }
+.music-track-btn.active {
+  background: var(--color-surface);
+}
+.music-track-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-text-faint);
+  flex-shrink: 0;
+  width: 20px;
+}
+.music-track-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.music-track-btn.active .music-track-title { font-weight: 700; }
+.music-track-play-icon {
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+}
+.music-track-btn.active .music-track-play-icon { color: var(--color-text); }
+
+/* Embed panel */
+.music-embed-wrap {
+  position: sticky;
+  top: calc(60px + var(--space-6));
+  border: 1px solid var(--color-border);
+  min-height: 200px;
+}
+.music-embed-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-10);
+  color: var(--color-text-faint);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-align: center;
+  min-height: 200px;
+}
+#music-embed {
+  display: block;
+  width: 100%;
+  height: 200px;
+  border: none;
+}
+
+/* Mobile: stack albums vertically, single column body */
+@media (max-width: 860px) {
+  .music-albums { flex-direction: column; gap: var(--space-3); }
+  .music-body { grid-template-columns: 1fr; }
+  .music-embed-wrap { position: static; }
+}
+@media (max-width: 640px) {
+  .music-album-btn { padding: var(--space-2) var(--space-3); }
+  .music-album-cover { width: 44px; height: 44px; }
+}

@@ -28,6 +28,7 @@ const TRANSLATIONS = {
     view_profile:     'View Profile ↗',
     albums_label:     '// ALBUMS',
     tracklist_label:  '// MADNESS.ZIP',
+    music_pick_track: 'Pick a track to play',
     about_label:      '// ABOUT',
     me_bio:           'Hi, I\'m Sebastian — born in Italy, half German, half Austrian, living in Switzerland. I create things: music, software, art. By day I work as an IT Workplace Engineer. By night I\'m building games, trackers, tools, and beats that nobody asked for but everybody secretly needs.',
     what_i_do_label:  '// WHAT I DO',
@@ -80,6 +81,7 @@ const TRANSLATIONS = {
     view_profile:     'Profil ansehen ↗',
     albums_label:     '// ALBEN',
     tracklist_label:  '// MADNESS.ZIP',
+    music_pick_track: 'Track auswählen',
     about_label:      '// ÜBER MICH',
     me_bio:           'Hi, ich bin Sebastian — geboren in Italien, halb Deutsch, halb Österreichisch, wohnhaft in der Schweiz. Ich erschaffe Dinge: Musik, Software, Kunst. Tagsüber arbeite ich als IT Workplace Engineer. Nachts baue ich Spiele, Tracker, Tools und Beats, die niemand bestellt hat, aber alle heimlich brauchen.',
     what_i_do_label:  '// WAS ICH MACHE',
@@ -130,6 +132,7 @@ const TRANSLATIONS = {
     view_profile:     'Vedi Profilo ↗',
     albums_label:     '// ALBUM',
     tracklist_label:  '// MADNESS.ZIP',
+    music_pick_track: 'Scegli un brano',
     about_label:      '// CHI SONO',
     me_bio:           'Ciao, sono Sebastian — nato in Italia, metà tedesco, metà austriaco, vivo in Svizzera. Creo cose: musica, software, arte. Di giorno lavoro come IT Workplace Engineer. Di notte costruisco giochi, tracker, strumenti e beat che nessuno ha chiesto ma di cui tutti hanno segretamente bisogno.',
     what_i_do_label:  '// COSA FACCIO',
@@ -450,8 +453,8 @@ const PROJECTS = [
   {
     id: 'wisdom-pack',
     name: 'wisdom-pack',
-    category: 'study',
-    categoryLabel: 'Study',
+    category: 'apps',
+    categoryLabel: 'Apps',
     description: 'TCG-style daily quote app. Open 10 packs a day and collect wisdom from philosophers, thinkers, and history.',
     github: 'https://github.com/littlebeansf/wisdom-pack',
     pages: 'https://littlebeansf.github.io/wisdom-pack/',
@@ -1106,154 +1109,131 @@ renderAccordions();
 
 /* ===== INIT ===== */
 
-/* ===== MUSIC PLAYER — Madness.zip (static, no fetch) ===== */
-const PLAYLIST = [
-  { id: '6e00b6da-b35b-4c25-865a-e2f11a0d61da', title: 'WITCH AT 190bpm',   audio: 'https://cdn1.suno.ai/6e00b6da-b35b-4c25-865a-e2f11a0d61da.mp3',   image: 'https://cdn2.suno.ai/video_gen_3b16377b-4ed5-410e-b051-5ec544e6a189_video_upload_3b16377b-4ed5-410e-b051-5ec544e6a189_cover_snapshot_0s_1766162536_image.jpeg',  tags: '190 BPM · Hard Techno' },
-  { id: '806b65e1-c3f9-41a9-8b60-ad89e25e9f2b', title: 'INFECTED VIKINGS',  audio: 'https://cdn1.suno.ai/806b65e1-c3f9-41a9-8b60-ad89e25e9f2b.mp3',   image: 'https://cdn2.suno.ai/video_gen_dd925aec-22d0-4911-989c-99f8339231e4_video_upload_dd925aec-22d0-4911-989c-99f8339231e4_cover_snapshot_0s_1766164242_image.jpeg',  tags: '185 BPM · Hard Techno' },
-  { id: '4900c72f-5798-4f0e-bf99-6bca2a533dd6', title: 'RUDRA | रुद्र',     audio: 'https://cdn1.suno.ai/4900c72f-5798-4f0e-bf99-6bca2a533dd6.mp3',   image: 'https://cdn2.suno.ai/video_gen_0f1cbd29-9f04-49d8-9541-44c78861d0fe_video_upload_0f1cbd29-9f04-49d8-9541-44c78861d0fe_cover_snapshot_0s_1766172908_image.jpeg',  tags: '165 BPM · Techno / Goa' },
-  { id: '7cd1ce74-598e-473d-a3ac-4c3194fd4b5c', title: 'YOKA-O-NI',         audio: 'https://cdn1.suno.ai/7cd1ce74-598e-473d-a3ac-4c3194fd4b5c.mp3',   image: 'https://cdn2.suno.ai/video_gen_c2424c8d-d573-4b49-a5bd-ef1391613414_video_upload_c2424c8d-d573-4b49-a5bd-ef1391613414_cover_snapshot_0s_1768292841_image.jpeg',  tags: '190 BPM · Hard Techno' },
-  { id: 'f841a16b-0595-44c3-81ea-970b78a20e3e', title: 'YODEL MTFUCKER',    audio: 'https://cdn1.suno.ai/f841a16b-0595-44c3-81ea-970b78a20e3e.mp3',   image: 'https://cdn2.suno.ai/52d0d91f-ff03-4787-b1fa-e0814383ff41.jpeg',                                                                                                       tags: '190 BPM · Swiss Yodel Techno' },
-  { id: '3481ad98-3f21-4801-bab9-96b03859a07a', title: 'DRUNK COBOLT',      audio: 'https://cdn1.suno.ai/3481ad98-3f21-4801-bab9-96b03859a07a.mp3',   image: 'https://cdn2.suno.ai/35410c24-546e-49f6-bc82-458c3de9df0d.jpeg',                                                                                                       tags: '190 BPM · Hard Techno' },
-  { id: '746ee5e9-1123-40b0-b0e0-f3f920f3f0b1', title: 'LAS PATRZY',        audio: 'https://cdn1.suno.ai/746ee5e9-1123-40b0-b0e0-f3f920f3f0b1.mp3',   image: 'https://cdn2.suno.ai/c135419a-07ad-487d-a68d-5e9730cf7414.jpeg',                                                                                                       tags: '160–190 BPM · Ritual Hard Techno' },
-  { id: '1d0ae377-67da-44b8-b9b9-bfb808af1e16', title: 'LAS PATRZY pt. 2',  audio: 'https://cdn1.suno.ai/1d0ae377-67da-44b8-b9b9-bfb808af1e16.mp3',   image: 'https://cdn2.suno.ai/7c5b7585-f6d5-45c6-b178-827bcabeb36d.jpeg',                                                                                                       tags: '160–190 BPM · Ritual Hard Techno' },
-  { id: '26fbe641-327c-4893-ba93-52d9780b4bb3', title: 'ACID',              audio: 'https://cdn1.suno.ai/26fbe641-327c-4893-ba93-52d9780b4bb3.mp3',   image: 'https://cdn2.suno.ai/video_gen_63895c7e-a50b-47cd-bd81-532e38ab769d_video_upload_63895c7e-a50b-47cd-bd81-532e38ab769d_cover_snapshot_0s_1767953081_image.jpeg',  tags: '175–185 BPM · Hard Techno' },
-  { id: '65f1c753-b5cf-40a6-a9b3-e5d982667546', title: 'WAIFU',             audio: 'https://cdn1.suno.ai/65f1c753-b5cf-40a6-a9b3-e5d982667546.mp3',   image: 'https://cdn2.suno.ai/video_gen_5504624f-09eb-477c-8b24-577960478013_video_upload_5504624f-09eb-477c-8b24-577960478013_cover_snapshot_0s_1767960829_image.jpeg',  tags: '155–165 BPM · Hard Techno' },
-  { id: 'e80d88a9-d916-408a-82a2-3e5ec67ed5ed', title: 'HORNY WAIFU',       audio: 'https://cdn1.suno.ai/e80d88a9-d916-408a-82a2-3e5ec67ed5ed.mp3',   image: 'https://cdn2.suno.ai/video_gen_26d1afe4-3f65-44d5-8c42-8b1bef2a2ec8_video_upload_26d1afe4-3f65-44d5-8c42-8b1bef2a2ec8_cover_snapshot_0s_1768247473_image.jpeg',  tags: '155–165 BPM · Hard Techno' },
-];
+/* ===== MUSIC — 3 albums, Suno embed player ===== */
+const ALBUMS = {
+  madness: {
+    title: 'Madness.zip',
+    cover: 'https://cdn2.suno.ai/b9e3928d.jpeg',
+    playlist: 'https://suno.com/playlist/7e22dab7-8293-47ae-9b5d-37594cd92576',
+    tracks: [
+      { id: '6e00b6da-b35b-4c25-865a-e2f11a0d61da', title: 'WITCH AT 190bpm' },
+      { id: '806b65e1-c3f9-41a9-8b60-ad89e25e9f2b', title: 'INFECTED VIKINGS' },
+      { id: '4900c72f-5798-4f0e-bf99-6bca2a533dd6', title: 'RUDRA | रुद्र' },
+      { id: '7cd1ce74-598e-473d-a3ac-4c3194fd4b5c', title: 'YOKA-O-NI' },
+      { id: 'f841a16b-0595-44c3-81ea-970b78a20e3e', title: 'YODEL MTFUCKER' },
+      { id: '3481ad98-3f21-4801-bab9-96b03859a07a', title: 'DRUNK COBOLT' },
+      { id: '746ee5e9-1123-40b0-b0e0-f3f920f3f0b1', title: 'LAS PATRZY' },
+      { id: '1d0ae377-67da-44b8-b9b9-bfb808af1e16', title: 'LAS PATRZY pt. 2' },
+      { id: '26fbe641-327c-4893-ba93-52d9780b4bb3', title: 'ACID' },
+      { id: '65f1c753-b5cf-40a6-a9b3-e5d982667546', title: 'WAIFU' },
+      { id: 'e80d88a9-d916-408a-82a2-3e5ec67ed5ed', title: 'HORNY WAIFU' }
+    ]
+  },
+  dancing: {
+    title: 'DANCING MONSTERS',
+    cover: 'https://cdn2.suno.ai/b3674a45.jpeg',
+    playlist: 'https://suno.com/playlist/0991758d-a658-47af-afd3-a664259b9ff1',
+    tracks: [
+      { id: '9f577755-77f4-4580-ae31-42cda132cffb', title: 'DANCING MONSTERS IN HOLLAND' },
+      { id: '040b233e-3051-4d51-864c-630fbd20d573', title: 'DANCING MONSTERS IN ARABIC' },
+      { id: '907c25aa-bfb4-423b-809a-25a297bd0837', title: 'BALLA COI MOSTRI' },
+      { id: '4d131ddf-ebae-402a-a831-00363f17492c', title: 'MIT MONSTER IM WALD TANZEN' },
+      { id: '7a887d31-0557-491a-a30a-337432365d59', title: 'DANCING MONSTERS IN JAPAN' },
+      { id: '77bc507c-a6c3-441f-b0bc-e6e1b6e6cf62', title: 'DANCING MONSTERS IN RUSSIA' },
+      { id: 'f3a8a51b-79f0-4c37-acb8-7ffc8147af1f', title: 'DANCING MONSTERS IN BRAZIL' }
+    ]
+  },
+  chaos: {
+    title: 'ᚲᚺᚨᛟᛊ',
+    cover: 'https://cdn2.suno.ai/bcc3d98c.jpeg',
+    playlist: 'https://suno.com/playlist/83ba60ba-2e48-44ec-a57d-6eed30f5ba49',
+    tracks: [
+      { id: 'ada6333e-6453-4188-a771-4066ff3eb98f', title: '"ᚨᛚᚢ // Ginnungagap' },
+      { id: '648329ef-1b03-4fac-82e6-655b01fdb182', title: 'ᚱᚨᚷᚾᚨᚱᛟᚲ' },
+      { id: 'c9ec6d08-1ec2-455e-8313-aa1142d52462', title: 'ᛊᚢᚲᚲ ᚦᛖ ᛏᛁᛏᛏᛁᛖᛊ ᛟᚠ ᚦᛖ ᚹᛁᛏᚲᚺ' },
+      { id: '2a0e3a40-6795-4331-b4cb-36c28b72afcc', title: 'ᛈᚱᛁᛗᛟᚱᛞᛟᛚ ᛗᛁᛚᚲ' },
+      { id: 'a0243cf2-53f7-4b8f-848d-69bfe43d610d', title: 'ᛊᚲᚢᚷᚷᚨᚠᛃᛟᚱ // M0nster' },
+      { id: '945cdcfa-12d9-4d62-8d66-6372c2bfea3a', title: 'ᛚᛃᛟᛊ ᚹᛖᚱᚦᚢᚱ ᛊᚲᚢᚷᚷᛁ' },
+      { id: '6d50fa47-b29c-4b6c-b7a0-1805cf4c35a5', title: 'ᛟᚱᛖᛁᚦᚨ' },
+      { id: 'acfb4731-4204-45c0-b952-16aaf2f0d492', title: 'ᛟᚱᛖᛁᚦᚨ (pr4y3r rmx)' },
+      { id: '7edf2270-92d4-4a9c-988b-6ce2c83b7806', title: 'ᚷᛟᚦ ᛞᛖᛃᚨ' }
+    ]
+  }
+};
 
-let currentTrack = 0;
-let shuffleMode  = false;
-let playOrder    = PLAYLIST.map((_, i) => i);
+let currentAlbum = 'madness';
+let currentTrackId = null;
 
-const audio    = document.getElementById('audio-player');
-const btnPlay  = document.getElementById('btn-play');
-const btnPrev  = document.getElementById('btn-prev');
-const btnNext  = document.getElementById('btn-next');
-const btnShuffle = document.getElementById('btn-shuffle');
-const barFill  = document.getElementById('player-bar-fill');
-const barTrack = document.getElementById('player-bar-track');
-const elCurrent= document.getElementById('player-current');
-const elDur    = document.getElementById('player-duration');
-const elTitle  = document.getElementById('player-title');
-const elCover  = document.getElementById('player-cover');
-const volSlider= document.getElementById('player-vol');
-const tracklist= document.getElementById('tracklist');
-
-function fmtTime(s) {
-  if (!isFinite(s)) return '0:00';
-  const m = Math.floor(s / 60);
-  const sec = Math.floor(s % 60);
-  return m + ':' + String(sec).padStart(2, '0');
-}
-
-function buildTracklist() {
-  if (!tracklist) return;
-  tracklist.innerHTML = PLAYLIST.map((t, i) => `
-    <div class="track-row" id="tr-${i}" onclick="loadTrack(${i}, true)">
-      <div class="track-num">${String(i + 1).padStart(2, '0')}</div>
-      <div class="track-cover" style="background-image:url('${t.image}')"></div>
-      <div class="track-info">
-        <span class="track-title">${t.title}</span>
-        <span class="track-tags">${t.tags}</span>
-      </div>
-      <div class="track-playing" id="tp-${i}"><span></span><span></span><span></span></div>
-    </div>
+function renderMusicTracklist(albumKey) {
+  const album = ALBUMS[albumKey];
+  if (!album) return;
+  const tl = document.getElementById('music-tracklist');
+  if (!tl) return;
+  tl.innerHTML = album.tracks.map((t, i) => `
+    <button class="music-track-btn${currentTrackId === t.id ? ' active' : ''}" data-id="${t.id}" aria-label="Play ${t.title}">
+      <span class="music-track-num">${String(i + 1).padStart(2, '0')}</span>
+      <span class="music-track-title">${t.title}</span>
+      <span class="music-track-play-icon">
+        ${currentTrackId === t.id
+          ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>'
+          : '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>'
+        }
+      </span>
+    </button>
   `).join('');
-}
 
-function loadTrack(idx, autoplay) {
-  currentTrack = idx;
-  const t = PLAYLIST[idx];
-  audio.src = t.audio;
-  audio.volume = volSlider ? parseFloat(volSlider.value) : 0.8;
-  elTitle.textContent  = t.title;
-  elCover.style.backgroundImage = `url('${t.image}')`;
-  barFill.style.width  = '0%';
-  elCurrent.textContent = '0:00';
-  elDur.textContent    = '0:00';
-  // update tracklist highlight
-  document.querySelectorAll('.track-row').forEach((r, i) => r.classList.toggle('active', i === idx));
-  document.querySelectorAll('.track-playing').forEach((el, i) => el.classList.toggle('playing', i === idx));
-  if (autoplay) {
-    audio.play().then(() => setPlayUI(true)).catch(() => {});
-  }
-}
-
-function setPlayUI(playing) {
-  const iconPlay  = btnPlay.querySelector('.icon-play');
-  const iconPause = btnPlay.querySelector('.icon-pause');
-  if (playing) {
-    iconPlay.style.display  = 'none';
-    iconPause.style.display = '';
-  } else {
-    iconPlay.style.display  = '';
-    iconPause.style.display = 'none';
-  }
-  // sync track row animation
-  document.querySelectorAll('.track-playing').forEach((el, i) => el.classList.toggle('playing', i === currentTrack && playing));
-}
-
-function nextTrack() {
-  if (shuffleMode) {
-    currentTrack = Math.floor(Math.random() * PLAYLIST.length);
-  } else {
-    currentTrack = (currentTrack + 1) % PLAYLIST.length;
-  }
-  loadTrack(currentTrack, true);
-}
-
-function prevTrack() {
-  if (audio.currentTime > 3) { audio.currentTime = 0; return; }
-  currentTrack = (currentTrack - 1 + PLAYLIST.length) % PLAYLIST.length;
-  loadTrack(currentTrack, true);
-}
-
-if (btnPlay) {
-  btnPlay.addEventListener('click', () => {
-    if (!audio.src) { loadTrack(0, true); return; }
-    if (audio.paused) {
-      audio.play().then(() => setPlayUI(true)).catch(() => {});
-    } else {
-      audio.pause();
-      setPlayUI(false);
-    }
-  });
-}
-if (btnPrev)  btnPrev.addEventListener('click', prevTrack);
-if (btnNext)  btnNext.addEventListener('click', nextTrack);
-if (btnShuffle) {
-  btnShuffle.addEventListener('click', () => {
-    shuffleMode = !shuffleMode;
-    btnShuffle.classList.toggle('active', shuffleMode);
+  // Attach click handlers
+  tl.querySelectorAll('.music-track-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const id = this.dataset.id;
+      playMusicTrack(id);
+    });
   });
 }
 
-audio.addEventListener('timeupdate', () => {
-  if (!audio.duration) return;
-  const pct = (audio.currentTime / audio.duration) * 100;
-  barFill.style.width = pct + '%';
-  elCurrent.textContent = fmtTime(audio.currentTime);
+function playMusicTrack(songId) {
+  currentTrackId = songId;
+  const iframe = document.getElementById('music-embed');
+  const placeholder = document.getElementById('music-embed-placeholder');
+  if (!iframe || !placeholder) return;
+
+  iframe.src = `https://suno.com/embed/${songId}`;
+  iframe.style.display = 'block';
+  placeholder.style.display = 'none';
+
+  // Re-render tracklist to update active state
+  renderMusicTracklist(currentAlbum);
+}
+
+function switchAlbum(albumKey) {
+  currentAlbum = albumKey;
+  currentTrackId = null;
+
+  // Update album button states
+  document.querySelectorAll('.music-album-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.album === albumKey);
+  });
+
+  // Reset embed
+  const iframe = document.getElementById('music-embed');
+  const placeholder = document.getElementById('music-embed-placeholder');
+  if (iframe) { iframe.src = ''; iframe.style.display = 'none'; }
+  if (placeholder) placeholder.style.display = 'flex';
+
+  renderMusicTracklist(albumKey);
+}
+
+// Init music view
+document.addEventListener('DOMContentLoaded', function() {
+  // Album buttons
+  document.querySelectorAll('.music-album-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      switchAlbum(this.dataset.album);
+    });
+  });
+  // Render default album
+  renderMusicTracklist('madness');
 });
-audio.addEventListener('durationchange', () => { elDur.textContent = fmtTime(audio.duration); });
-audio.addEventListener('ended', nextTrack);
-audio.addEventListener('play',  () => setPlayUI(true));
-audio.addEventListener('pause', () => setPlayUI(false));
-
-if (barTrack) {
-  barTrack.addEventListener('click', (e) => {
-    if (!audio.duration) return;
-    const rect = barTrack.getBoundingClientRect();
-    audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
-  });
-}
-if (volSlider) {
-  volSlider.addEventListener('input', () => { audio.volume = parseFloat(volSlider.value); });
-}
-
-buildTracklist();
-loadTrack(0, false);
-
-/* Madness.zip is the one and only static playlist — no fetch needed */
 
 /* ===== SPEND BUTTON — toggle popover ===== */
 document.addEventListener('DOMContentLoaded', function() {
