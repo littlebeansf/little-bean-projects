@@ -1134,13 +1134,18 @@ const ALBUMS = {
     cover: 'https://cdn2.suno.ai/b3674a45.jpeg',
     playlist: 'https://suno.com/playlist/0991758d-a658-47af-afd3-a664259b9ff1',
     tracks: [
-      { id: '9f577755-77f4-4580-ae31-42cda132cffb', title: 'DANCING MONSTERS IN HOLLAND' },
-      { id: '040b233e-3051-4d51-864c-630fbd20d573', title: 'DANCING MONSTERS IN ARABIC' },
-      { id: '907c25aa-bfb4-423b-809a-25a297bd0837', title: 'BALLA COI MOSTRI' },
-      { id: '4d131ddf-ebae-402a-a831-00363f17492c', title: 'MIT MONSTER IM WALD TANZEN' },
-      { id: '7a887d31-0557-491a-a30a-337432365d59', title: 'DANCING MONSTERS IN JAPAN' },
-      { id: '77bc507c-a6c3-441f-b0bc-e6e1b6e6cf62', title: 'DANCING MONSTERS IN RUSSIA' },
-      { id: 'f3a8a51b-79f0-4c37-acb8-7ffc8147af1f', title: 'DANCING MONSTERS IN BRAZIL' }
+      { id: '9f577755-77f4-4580-ae31-42cda132cffb', title: 'DANCING MONSTERS IN HOLLAND',            country: 'Netherlands', capital: 'Amsterdam',   lat: 52.3676, lng:  4.9041 },
+      { id: '040b233e-3051-4d51-864c-630fbd20d573', title: 'DANCING MONSTERS IN ARABIC',             country: 'Egypt',       capital: 'Cairo',       lat: 30.0444, lng: 31.2357 },
+      { id: '907c25aa-bfb4-423b-809a-25a297bd0837', title: 'DANCING MONSTERS IN ITALY',             country: 'Italy',       capital: 'Rome',        lat: 41.9028, lng: 12.4964 },
+      { id: '4d131ddf-ebae-402a-a831-00363f17492c', title: 'DANCING MONSTERS IN GERMANY',           country: 'Germany',     capital: 'Berlin',      lat: 52.5200, lng: 13.4050 },
+      { id: '7a887d31-0557-491a-a30a-337432365d59', title: 'DANCING MONSTERS IN JAPAN',             country: 'Japan',       capital: 'Tokyo',       lat: 35.6762, lng: 139.6503 },
+      { id: '77bc507c-a6c3-441f-b0bc-e6e1b6e6cf62', title: 'DANCING MONSTERS IN RUSSIA',           country: 'Russia',      capital: 'Moscow',      lat: 55.7558, lng: 37.6173 },
+      { id: 'f3a8a51b-79f0-4c37-acb8-7ffc8147af1f', title: 'DANCING MONSTERS IN BRAZIL',           country: 'Brazil',      capital: 'Brasília',    lat: -15.7801, lng: -47.9292 },
+      { id: 'd32b3deb-6737-4f17-8c89-d1599caaa06c', title: 'DANCING MONSTERS IN NORWAY',           country: 'Norway',      capital: 'Oslo',        lat: 59.9139, lng: 10.7522 },
+      { id: '6b93f0bb-ba77-4557-8786-32e0b0c8f79b', title: 'DANCING MONSTERS IN EGYPT',            country: 'Egypt',       capital: 'Cairo',       lat: 30.0444, lng: 31.2357 },
+      { id: 'e6056755-67ec-4f4b-b6d7-385935435fcb', title: 'DANCING MONSTERS IN AMERICA',          country: 'USA',         capital: 'Washington',  lat: 38.9072, lng: -77.0369 },
+      { id: 'fc7ccfac-45d5-4d04-b0f2-b546d6118e30', title: 'DANCING MONSTERS IN FRANCE',           country: 'France',      capital: 'Paris',       lat: 48.8566, lng:  2.3522 },
+      { id: '4e9fb12f-29c6-44f7-8345-6bbeb600b1f3', title: 'DANCING MONSTERS IN SPAIN',            country: 'Spain',       capital: 'Madrid',      lat: 40.4168, lng: -3.7038 }
     ]
   },
   chaos: {
@@ -1214,13 +1219,231 @@ function switchAlbum(albumKey) {
     btn.classList.toggle('active', btn.dataset.album === albumKey);
   });
 
-  // Reset embed
-  const iframe = document.getElementById('music-embed');
-  const placeholder = document.getElementById('music-embed-placeholder');
-  if (iframe) { iframe.src = ''; iframe.style.display = 'none'; }
-  if (placeholder) placeholder.style.display = 'flex';
+  // Show globe or tracklist
+  const bodyTracklist = document.getElementById('music-body-tracklist');
+  const bodyGlobe     = document.getElementById('music-body-globe');
 
-  renderMusicTracklist(albumKey);
+  if (albumKey === 'dancing') {
+    if (bodyTracklist) bodyTracklist.style.display = 'none';
+    if (bodyGlobe)     bodyGlobe.style.display = 'grid';
+    // rAF ensures the grid cell has painted and clientWidth is available
+    requestAnimationFrame(() => initDancingGlobe());
+  } else {
+    if (bodyTracklist) bodyTracklist.style.display = 'grid';
+    if (bodyGlobe)     bodyGlobe.style.display = 'none';
+    // Reset tracklist embed
+    const iframe = document.getElementById('music-embed');
+    const placeholder = document.getElementById('music-embed-placeholder');
+    if (iframe) { iframe.src = ''; iframe.style.display = 'none'; }
+    if (placeholder) placeholder.style.display = 'flex';
+    renderMusicTracklist(albumKey);
+  }
+}
+
+/* ===== DANCING MONSTERS — D3 Globe ===== */
+let _globeInitialised = false;
+
+function initDancingGlobe() {
+  // Only build once — D3 is already in the DOM
+  if (_globeInitialised) return;
+  if (typeof d3 === 'undefined' || typeof topojson === 'undefined') {
+    // D3 not loaded yet — retry
+    setTimeout(initDancingGlobe, 300);
+    return;
+  }
+  _globeInitialised = true;
+
+  const tracks = ALBUMS.dancing.tracks;
+  const svgEl  = document.getElementById('dancing-globe');
+  if (!svgEl) return;
+
+  const W = svgEl.parentElement.clientWidth || 460;
+  const SIZE = Math.min(W, 460);
+  const R = SIZE / 2 - 4;
+
+  const svg = d3.select('#dancing-globe')
+    .attr('width',  SIZE)
+    .attr('height', SIZE)
+    .style('cursor', 'grab');
+
+  // Dark space background
+  svg.append('circle')
+    .attr('cx', SIZE/2).attr('cy', SIZE/2).attr('r', R + 2)
+    .attr('fill', '#050608');
+
+  const proj = d3.geoOrthographic()
+    .scale(R)
+    .translate([SIZE/2, SIZE/2])
+    .clipAngle(90)
+    .rotate([20, -20]);
+
+  const path = d3.geoPath().projection(proj);
+
+  const globe = svg.append('g');
+
+  // Ocean fill
+  globe.append('circle')
+    .attr('class', 'globe-ocean')
+    .attr('cx', SIZE/2).attr('cy', SIZE/2).attr('r', R)
+    .attr('fill', '#0d1b2a');
+
+  const landG  = globe.append('g').attr('class', 'globe-land');
+  const dotsG  = globe.append('g').attr('class', 'globe-dots');
+  const labelsG = globe.append('g').attr('class', 'globe-labels');
+
+  // Graticule
+  const graticule = d3.geoGraticule()();
+  globe.append('path')
+    .datum(graticule)
+    .attr('class', 'globe-graticule')
+    .attr('d', path)
+    .attr('fill', 'none')
+    .attr('stroke', '#1a2a3a')
+    .attr('stroke-width', 0.4);
+
+  // Load world topojson
+  d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
+    const countries = topojson.feature(world, world.objects.countries);
+
+    landG.selectAll('path')
+      .data(countries.features)
+      .join('path')
+      .attr('d', path)
+      .attr('fill', '#1c2e1c')
+      .attr('stroke', '#2a4a2a')
+      .attr('stroke-width', 0.5);
+
+    renderDots();
+    autoSpin();
+  });
+
+  function renderDots() {
+    dotsG.selectAll('*').remove();
+    labelsG.selectAll('*').remove();
+
+    // Group tracks by unique lat/lng
+    const points = {};
+    tracks.forEach(t => {
+      const key = `${t.lat},${t.lng}`;
+      if (!points[key]) points[key] = [];
+      points[key].push(t);
+    });
+
+    Object.entries(points).forEach(([key, pts]) => {
+      const { lat, lng, capital } = pts[0];
+      const projected = proj([lng, lat]);
+      if (!projected) return;
+
+      // Clip — only show dots on visible hemisphere
+      const visible = d3.geoDistance([lng, lat], [-proj.rotate()[0], -proj.rotate()[1]]) < Math.PI / 2;
+      if (!visible) return;
+
+      const [x, y] = projected;
+
+      // Outer glow ring (animated via CSS)
+      dotsG.append('circle')
+        .attr('class', 'globe-dot-glow')
+        .attr('cx', x).attr('cy', y)
+        .attr('r', 8)
+        .attr('fill', 'none')
+        .attr('stroke', '#ff4444')
+        .attr('stroke-width', 1)
+        .attr('opacity', 0.4);
+
+      // Inner dot
+      const dot = dotsG.append('circle')
+        .attr('class', 'globe-dot')
+        .attr('cx', x).attr('cy', y)
+        .attr('r', 5)
+        .attr('fill', '#ff2222')
+        .attr('stroke', '#ff8888')
+        .attr('stroke-width', 1)
+        .style('cursor', 'pointer')
+        .on('click', (event) => {
+          event.stopPropagation();
+          stopSpin();
+          // If multiple tracks at same location, pick first unplayed
+          const track = pts[0];
+          playGlobeTrack(track);
+        })
+        .on('mouseover', function() {
+          d3.select(this).attr('r', 7).attr('fill', '#ff6666');
+          showGlobeLabel(x, y, pts.map(p => p.title.replace('DANCING MONSTERS IN ', '')).join(' / '));
+        })
+        .on('mouseout', function() {
+          d3.select(this).attr('r', 5).attr('fill', '#ff2222');
+          labelsG.selectAll('*').remove();
+        });
+    });
+  }
+
+  function showGlobeLabel(x, y, text) {
+    labelsG.selectAll('*').remove();
+    const lx = x + 10;
+    const ly = y - 6;
+    labelsG.append('rect')
+      .attr('x', lx - 3).attr('y', ly - 12)
+      .attr('width', text.length * 6 + 8).attr('height', 18)
+      .attr('fill', '#0a0908').attr('opacity', 0.85)
+      .attr('rx', 2);
+    labelsG.append('text')
+      .attr('x', lx).attr('y', ly)
+      .attr('fill', '#e8e5de')
+      .attr('font-size', '10px')
+      .attr('font-family', 'Space Mono, monospace')
+      .text(text);
+  }
+
+  // Drag to spin
+  let isDragging = false;
+  let spinTimer = null;
+  const sensitivity = 0.3;
+
+  svg.call(d3.drag()
+    .on('start', () => { isDragging = true; stopSpin(); svg.style('cursor', 'grabbing'); })
+    .on('drag', (event) => {
+      const rotate = proj.rotate();
+      proj.rotate([rotate[0] + event.dx * sensitivity, rotate[1] - event.dy * sensitivity]);
+      landG.selectAll('path').attr('d', path);
+      globe.select('.globe-graticule').attr('d', path);
+      renderDots();
+    })
+    .on('end', () => { isDragging = false; svg.style('cursor', 'grab'); autoSpin(); })
+  );
+
+  function stopSpin() {
+    if (spinTimer) { spinTimer.stop(); spinTimer = null; }
+  }
+
+  function autoSpin() {
+    stopSpin();
+    spinTimer = d3.timer((elapsed) => {
+      if (isDragging) return;
+      const rotate = proj.rotate();
+      proj.rotate([rotate[0] + 0.15, rotate[1]]);
+      landG.selectAll('path').attr('d', path);
+      globe.select('.globe-graticule').attr('d', path);
+      renderDots();
+    });
+  }
+}
+
+function playGlobeTrack(track) {
+  const iframe = document.getElementById('music-embed-globe');
+  const placeholder = document.getElementById('music-embed-placeholder-globe');
+  const nowPlaying = document.getElementById('globe-now-playing');
+  const nowTitle   = document.getElementById('globe-now-title');
+  if (!iframe) return;
+
+  iframe.src = `https://suno.com/embed/${track.id}`;
+  iframe.style.display = 'block';
+  if (placeholder) placeholder.style.display = 'none';
+  if (nowPlaying) nowPlaying.style.display = 'flex';
+  if (nowTitle)   nowTitle.textContent = track.title;
+
+  // Dismiss globe hint
+  const hint = document.getElementById('globe-hint');
+  if (hint) hint.style.opacity = '0';
 }
 
 // Init music view
