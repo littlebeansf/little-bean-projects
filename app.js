@@ -22,6 +22,7 @@ const TRANSLATIONS = {
     cat_games:        'Games',
     cat_trackers:     'Trackers',
     cat_tools:        'Tools',
+    cat_lab:          'Lab',
     cat_study:        'Study',
     cat_music:        'Music',
     all_projects:     'All_Projects',
@@ -60,6 +61,7 @@ const TRANSLATIONS = {
     acc_apps:     'Apps',
     acc_trackers: 'Trackers',
     acc_tools:    'Tools',
+    acc_lab:      'Lab',
     acc_music:    'Music',
   },
   de: {
@@ -75,6 +77,7 @@ const TRANSLATIONS = {
     cat_games:        'Spiele',
     cat_trackers:     'Tracker',
     cat_tools:        'Werkzeuge',
+    cat_lab:          'Lab',
     cat_study:        'Lernen',
     cat_music:        'Musik',
     all_projects:     'Alle_Projekte',
@@ -111,6 +114,7 @@ const TRANSLATIONS = {
     acc_apps:     'Apps',
     acc_trackers: 'Tracker',
     acc_tools:    'Werkzeuge',
+    acc_lab:      'Lab',
     acc_music:    'Musik',
   },
   it: {
@@ -126,6 +130,7 @@ const TRANSLATIONS = {
     cat_games:        'Giochi',
     cat_trackers:     'Tracker',
     cat_tools:        'Strumenti',
+    cat_lab:          'Lab',
     cat_study:        'Studio',
     cat_music:        'Musica',
     all_projects:     'Tutti_i_Progetti',
@@ -162,6 +167,7 @@ const TRANSLATIONS = {
     acc_apps:     'App',
     acc_trackers: 'Tracker',
     acc_tools:    'Strumenti',
+    acc_lab:      'Lab',
     acc_music:    'Musica',
   }
 };
@@ -471,6 +477,46 @@ const PROJECTS = [
     ]
   },
   {
+    id: 'paint-mixer',
+    name: 'paint-mixer',
+    category: 'tools',
+    categoryLabel: 'Tool',
+    description: 'Professional colour mixing studio. Blend up to 8 pigments, apply 16 special effects — metallic, marble, glitter, crystal — and preview live.',
+    github: 'https://github.com/littlebeansf/paint-mixer',
+    pages: 'https://littlebeansf.github.io/paint-mixer/',
+    image: 'img/paint-mixer.png',
+    language: 'JavaScript',
+    isPrivate: false,
+    updated: '2026-05-27',
+    highlights: [
+      '8-pigment live blend preview',
+      '16 special effects: metallic, marble, glitter, crystal',
+      '3D preview mode',
+      'Saved palette library',
+      'Canvas API powered'
+    ]
+  },
+  {
+    id: 'wtf-css',
+    name: 'wtf-css',
+    category: 'lab',
+    categoryLabel: 'Lab',
+    description: 'A living CSS sandbox of insane browser tricks. Eye-awakening scroll effects, liquid text, false 3D, glitch animations — is this even a browser?',
+    github: 'https://github.com/littlebeansf/wtf-css',
+    pages: 'https://littlebeansf.github.io/wtf-css/',
+    image: 'img/wtf-css.png',
+    language: 'CSS',
+    isPrivate: false,
+    updated: '2026-05-27',
+    highlights: [
+      'Eye Awakening scroll reveal',
+      'Liquid text filter effects',
+      'False 3D depth with mouse tracking',
+      'Signal Decay clip-path glitch',
+      'CSS-only experiments'
+    ]
+  },
+  {
     id: 'you-dont-have-to-use-your-brain',
     name: 'you-dont-have-to-use-your-brain',
     category: 'study',
@@ -620,6 +666,7 @@ const CATEGORIES = [
   { id: 'tools',    label: 'Tools' },
   { id: 'study',    label: 'Study' },
   { id: 'music',    label: 'Music' },
+  { id: 'lab',      label: 'Lab' },
 ];
 
 /* ═══════════════════════════════════════════════════════
@@ -812,6 +859,35 @@ const LOADERS = {
       }}
       animateDash(left,  200, 0, 260, onPage);
       animateDash(right, 200, 0, 260, onPage);
+    });
+  },
+
+  lab: function(svg, done) {
+    // Flask fills with liquid, then bubbles float up
+    svg.innerHTML = `
+      <path id="ll-flask" d="M30,18 L30,42 L16,62 Q14,68 20,70 L60,70 Q66,68 64,62 L50,42 L50,18 Z"
+        stroke-width="2.8" fill="none" stroke-dasharray="200" stroke-dashoffset="200"/>
+      <line id="ll-neck" x1="26" y1="18" x2="54" y2="18"
+        stroke-width="2.8" stroke-dasharray="30" stroke-dashoffset="30"/>
+      <circle id="ll-b1" cx="30" cy="65" r="3"
+        stroke-width="2" fill="none" stroke-dasharray="20" stroke-dashoffset="20" opacity="0"/>
+      <circle id="ll-b2" cx="40" cy="60" r="4"
+        stroke-width="2" fill="none" stroke-dasharray="26" stroke-dashoffset="26" opacity="0"/>
+      <circle id="ll-b3" cx="50" cy="64" r="3"
+        stroke-width="2" fill="none" stroke-dasharray="20" stroke-dashoffset="20" opacity="0"/>
+    `;
+    animateDash(svg.getElementById('ll-flask'), 200, 0, 350, function() {
+      animateDash(svg.getElementById('ll-neck'), 30, 0, 120, function() {
+        [1,2,3].forEach(function(n, i) {
+          setTimeout(function() {
+            var b = svg.getElementById('ll-b' + n);
+            b.setAttribute('opacity', '1');
+            animateDash(b, parseFloat(b.getAttribute('stroke-dasharray')), 0, 150, function() {
+              floatUp(b, 0, 18, 400, n === 3 ? done : null);
+            });
+          }, i * 140);
+        });
+      });
     });
   },
 
