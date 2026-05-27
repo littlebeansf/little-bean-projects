@@ -1340,20 +1340,34 @@ function initDancingGlobe() {
 
       const [x, y] = projected;
 
+      // Detect touch device — bigger hit area on mobile
+      const isMobile = window.matchMedia('(max-width: 860px)').matches;
+      const DOT = isMobile ? 8 : 5;   // visual half-size
+      const HIT = isMobile ? 22 : 10; // touch/click hit-area half-size
+
       // Pulse ring
       dotsG.append('circle')
         .attr('class', 'globe-dot-glow')
-        .attr('cx', x).attr('cy', y).attr('r', 9)
+        .attr('cx', x).attr('cy', y)
+        .attr('r', DOT + 6)
         .attr('fill', 'none')
         .attr('stroke', C.text)
-        .attr('stroke-width', 0.8);
+        .attr('stroke-width', isMobile ? 1.2 : 0.8);
 
-      // Square dot (3×3, centred) — matches cursor aesthetic
+      // Square dot — visual marker
       dotsG.append('rect')
         .attr('class', 'globe-dot')
-        .attr('x', x - 3).attr('y', y - 3)
-        .attr('width', 6).attr('height', 6)
+        .attr('x', x - DOT).attr('y', y - DOT)
+        .attr('width', DOT * 2).attr('height', DOT * 2)
         .attr('fill', C.text)
+        .style('pointer-events', 'none'); // hit area handles events
+
+      // Invisible touch/click hit area (44px min on mobile)
+      dotsG.append('rect')
+        .attr('class', 'globe-dot-hit')
+        .attr('x', x - HIT).attr('y', y - HIT)
+        .attr('width', HIT * 2).attr('height', HIT * 2)
+        .attr('fill', 'transparent')
         .style('cursor', 'pointer')
         .on('click', (event) => {
           event.stopPropagation();
@@ -1361,11 +1375,14 @@ function initDancingGlobe() {
           playGlobeTrack(pts[0]);
         })
         .on('mouseover', function() {
-          d3.select(this).attr('opacity', 0.5);
+          dotsG.selectAll('.globe-dot').filter((d, i, nodes) => {
+            const el = nodes[i];
+            return +el.getAttribute('x') === x - DOT && +el.getAttribute('y') === y - DOT;
+          }).attr('opacity', 0.5);
           showGlobeLabel(x, y, pts.map(p => p.title.replace('DANCING MONSTERS IN ', '')).join(' / '));
         })
         .on('mouseout', function() {
-          d3.select(this).attr('opacity', 1);
+          dotsG.selectAll('.globe-dot').attr('opacity', 1);
           labelsG.selectAll('*').remove();
         });
     });
