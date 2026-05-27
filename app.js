@@ -1244,32 +1244,35 @@ function switchAlbum(albumKey) {
 let _globeInitialised = false;
 
 function initDancingGlobe() {
-  // Only build once — D3 is already in the DOM
   if (_globeInitialised) return;
   if (typeof d3 === 'undefined' || typeof topojson === 'undefined') {
-    // D3 not loaded yet — retry
     setTimeout(initDancingGlobe, 300);
     return;
   }
   _globeInitialised = true;
 
+  // Read CSS vars at runtime → auto light/dark
+  const rootStyle = getComputedStyle(document.documentElement);
+  const C = {
+    bg:      rootStyle.getPropertyValue('--color-bg').trim()      || '#f0ede8',
+    text:    rootStyle.getPropertyValue('--color-text').trim()    || '#0f0e0c',
+    border:  rootStyle.getPropertyValue('--color-border').trim()  || '#c8c3bb',
+    surface: rootStyle.getPropertyValue('--color-surface').trim() || '#e8e4de',
+    faint:   rootStyle.getPropertyValue('--color-text-faint').trim() || '#a09a90',
+  };
+
   const tracks = ALBUMS.dancing.tracks;
   const svgEl  = document.getElementById('dancing-globe');
   if (!svgEl) return;
 
-  const W = svgEl.parentElement.clientWidth || 460;
-  const SIZE = Math.min(W, 460);
-  const R = SIZE / 2 - 4;
+  const W = svgEl.parentElement.clientWidth || 440;
+  const SIZE = Math.min(W - 16, 440);
+  const R = SIZE / 2 - 2;
 
   const svg = d3.select('#dancing-globe')
     .attr('width',  SIZE)
     .attr('height', SIZE)
     .style('cursor', 'grab');
-
-  // Dark space background
-  svg.append('circle')
-    .attr('cx', SIZE/2).attr('cy', SIZE/2).attr('r', R + 2)
-    .attr('fill', '#050608');
 
   const proj = d3.geoOrthographic()
     .scale(R)
@@ -1278,30 +1281,29 @@ function initDancingGlobe() {
     .rotate([20, -20]);
 
   const path = d3.geoPath().projection(proj);
-
   const globe = svg.append('g');
 
-  // Ocean fill
+  // Outer border circle
   globe.append('circle')
-    .attr('class', 'globe-ocean')
     .attr('cx', SIZE/2).attr('cy', SIZE/2).attr('r', R)
-    .attr('fill', '#0d1b2a');
+    .attr('fill', C.bg)
+    .attr('stroke', C.border)
+    .attr('stroke-width', 1);
 
-  const landG  = globe.append('g').attr('class', 'globe-land');
-  const dotsG  = globe.append('g').attr('class', 'globe-dots');
+  const landG   = globe.append('g').attr('class', 'globe-land');
+  const dotsG   = globe.append('g').attr('class', 'globe-dots');
   const labelsG = globe.append('g').attr('class', 'globe-labels');
 
-  // Graticule
-  const graticule = d3.geoGraticule()();
+  // Hairline graticule
   globe.append('path')
-    .datum(graticule)
+    .datum(d3.geoGraticule()())
     .attr('class', 'globe-graticule')
     .attr('d', path)
     .attr('fill', 'none')
-    .attr('stroke', '#1a2a3a')
-    .attr('stroke-width', 0.4);
+    .attr('stroke', C.border)
+    .attr('stroke-width', 0.3)
+    .attr('opacity', 0.5);
 
-  // Load world topojson
   d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
     const countries = topojson.feature(world, world.objects.countries);
 
@@ -1309,9 +1311,9 @@ function initDancingGlobe() {
       .data(countries.features)
       .join('path')
       .attr('d', path)
-      .attr('fill', '#1c2e1c')
-      .attr('stroke', '#2a4a2a')
-      .attr('stroke-width', 0.5);
+      .attr('fill', C.surface)
+      .attr('stroke', C.border)
+      .attr('stroke-width', 0.6);
 
     renderDots();
     autoSpin();
@@ -1321,7 +1323,6 @@ function initDancingGlobe() {
     dotsG.selectAll('*').remove();
     labelsG.selectAll('*').remove();
 
-    // Group tracks by unique lat/lng
     const points = {};
     tracks.forEach(t => {
       const key = `${t.lat},${t.lng}`;
@@ -1330,48 +1331,41 @@ function initDancingGlobe() {
     });
 
     Object.entries(points).forEach(([key, pts]) => {
-      const { lat, lng, capital } = pts[0];
+      const { lat, lng } = pts[0];
       const projected = proj([lng, lat]);
       if (!projected) return;
 
-      // Clip — only show dots on visible hemisphere
       const visible = d3.geoDistance([lng, lat], [-proj.rotate()[0], -proj.rotate()[1]]) < Math.PI / 2;
       if (!visible) return;
 
       const [x, y] = projected;
 
-      // Outer glow ring (animated via CSS)
+      // Pulse ring
       dotsG.append('circle')
         .attr('class', 'globe-dot-glow')
-        .attr('cx', x).attr('cy', y)
-        .attr('r', 8)
+        .attr('cx', x).attr('cy', y).attr('r', 9)
         .attr('fill', 'none')
-        .attr('stroke', '#ff4444')
-        .attr('stroke-width', 1)
-        .attr('opacity', 0.4);
+        .attr('stroke', C.text)
+        .attr('stroke-width', 0.8);
 
-      // Inner dot
-      const dot = dotsG.append('circle')
+      // Square dot (3×3, centred) — matches cursor aesthetic
+      dotsG.append('rect')
         .attr('class', 'globe-dot')
-        .attr('cx', x).attr('cy', y)
-        .attr('r', 5)
-        .attr('fill', '#ff2222')
-        .attr('stroke', '#ff8888')
-        .attr('stroke-width', 1)
+        .attr('x', x - 3).attr('y', y - 3)
+        .attr('width', 6).attr('height', 6)
+        .attr('fill', C.text)
         .style('cursor', 'pointer')
         .on('click', (event) => {
           event.stopPropagation();
           stopSpin();
-          // If multiple tracks at same location, pick first unplayed
-          const track = pts[0];
-          playGlobeTrack(track);
+          playGlobeTrack(pts[0]);
         })
         .on('mouseover', function() {
-          d3.select(this).attr('r', 7).attr('fill', '#ff6666');
+          d3.select(this).attr('opacity', 0.5);
           showGlobeLabel(x, y, pts.map(p => p.title.replace('DANCING MONSTERS IN ', '')).join(' / '));
         })
         .on('mouseout', function() {
-          d3.select(this).attr('r', 5).attr('fill', '#ff2222');
+          d3.select(this).attr('opacity', 1);
           labelsG.selectAll('*').remove();
         });
     });
@@ -1379,19 +1373,25 @@ function initDancingGlobe() {
 
   function showGlobeLabel(x, y, text) {
     labelsG.selectAll('*').remove();
-    const lx = x + 10;
-    const ly = y - 6;
+    const PAD = 5;
+    const FONT = 9;
+    const w = text.length * (FONT * 0.6) + PAD * 2;
+    const lx = (x + 12 + w > SIZE) ? x - w - 4 : x + 12;
+    const ly = y - 2;
     labelsG.append('rect')
-      .attr('x', lx - 3).attr('y', ly - 12)
-      .attr('width', text.length * 6 + 8).attr('height', 18)
-      .attr('fill', '#0a0908').attr('opacity', 0.85)
+      .attr('x', lx - PAD).attr('y', ly - FONT - 1)
+      .attr('width', w).attr('height', FONT + PAD)
+      .attr('fill', C.bg)
+      .attr('stroke', C.border)
+      .attr('stroke-width', 0.5)
       .attr('rx', 2);
     labelsG.append('text')
       .attr('x', lx).attr('y', ly)
-      .attr('fill', '#e8e5de')
-      .attr('font-size', '10px')
+      .attr('fill', C.text)
+      .attr('font-size', `${FONT}px`)
       .attr('font-family', 'Space Mono, monospace')
-      .text(text);
+      .attr('letter-spacing', '0.06em')
+      .text(text.toUpperCase());
   }
 
   // Drag to spin
