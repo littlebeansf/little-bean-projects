@@ -308,6 +308,26 @@ const PROJECTS = [
     ]
   },
   {
+    id: 'crucible-game',
+    name: 'crucible-game',
+    category: 'games',
+    categoryLabel: 'Game',
+    description: 'Little Alchemy meets physics sandbox. Discover ~6,000 elements by combining them, then drop anything you\'ve found into a live SVG physics world — watch it fall, flow, burn, and freeze.',
+    github: 'https://github.com/littlebeansf/crucible-game',
+    pages: 'https://littlebeansf.github.io/crucible-game/',
+    image: 'img/crucible-game.png',
+    language: 'JavaScript',
+    isPrivate: false,
+    updated: '2026-06-11',
+    highlights: [
+      '~6,000 discoverable elements',
+      'Drag-to-combine Forge mode',
+      'Live SVG physics Sandbox',
+      'Fire, water, ice, lava physics',
+      'Pure vanilla JS + SVG'
+    ]
+  },
+  {
     id: 'framestack',
     name: 'framestack',
     category: 'trackers',
@@ -678,6 +698,7 @@ const TILE_DATA = {
   'dealer-life-simulator':       { pages: 'https://littlebeansf.github.io/dealer-life-simulator/',        desc: 'A goblin deals your fate' },
   'it-clicker':                  { pages: 'https://littlebeansf.github.io/it-clicker/',                   desc: 'Survive the IT help desk' },
   'sip-and-spill':               { pages: 'https://littlebeansf.github.io/sip-and-spill/',                desc: 'Drinking game, escalating rounds' },
+  'crucible-game':               { pages: 'https://littlebeansf.github.io/crucible-game/',               desc: 'Combine elements, unleash physics' },
   'sunfinder':                   { pages: 'https://littlebeansf.github.io/sunfinder/',                    desc: 'Find the sun from where you are' },
   'currency-chaos':              { pages: 'https://littlebeansf.github.io/currency-chaos/',               desc: 'Convert anything into anything' },
   'framestack':                  { pages: 'https://littlebeansf.github.io/framestack/',                   desc: 'Track what you watch and read' },
