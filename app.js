@@ -23,6 +23,7 @@ const TRANSLATIONS = {
     cat_trackers:     'Trackers',
     cat_tools:        'Tools',
     cat_lab:          'Lab',
+    cat_art:          'Art',
     cat_study:        'Study',
     cat_music:        'Music',
     all_projects:     'All_Projects',
@@ -62,6 +63,7 @@ const TRANSLATIONS = {
     acc_trackers: 'Trackers',
     acc_tools:    'Tools',
     acc_lab:      'Lab',
+    acc_art:      'Art',
     acc_music:    'Music',
   },
   de: {
@@ -78,6 +80,7 @@ const TRANSLATIONS = {
     cat_trackers:     'Tracker',
     cat_tools:        'Werkzeuge',
     cat_lab:          'Lab',
+    cat_art:          'Kunst',
     cat_study:        'Lernen',
     cat_music:        'Musik',
     all_projects:     'Alle_Projekte',
@@ -115,6 +118,7 @@ const TRANSLATIONS = {
     acc_trackers: 'Tracker',
     acc_tools:    'Werkzeuge',
     acc_lab:      'Lab',
+    acc_art:      'Kunst',
     acc_music:    'Musik',
   },
   it: {
@@ -131,6 +135,7 @@ const TRANSLATIONS = {
     cat_trackers:     'Tracker',
     cat_tools:        'Strumenti',
     cat_lab:          'Lab',
+    cat_art:          'Arte',
     cat_study:        'Studio',
     cat_music:        'Musica',
     all_projects:     'Tutti_i_Progetti',
@@ -168,6 +173,7 @@ const TRANSLATIONS = {
     acc_trackers: 'Tracker',
     acc_tools:    'Strumenti',
     acc_lab:      'Lab',
+    acc_art:      'Arte',
     acc_music:    'Musica',
   }
 };
@@ -557,6 +563,26 @@ const PROJECTS = [
     ]
   },
   {
+    id: 'monstrarium',
+    name: 'monstrarium',
+    category: 'art',
+    categoryLabel: 'Art',
+    description: 'An interactive page-turning bestiary of the seven deadly sins — illustrated in Witcher-codex style, done by AI, conceived by SF.',
+    github: 'https://github.com/littlebeansf/monstrarium',
+    pages: 'https://littlebeansf.github.io/monstrarium/',
+    image: 'img/monstrarium.png',
+    language: 'JavaScript',
+    isPrivate: false,
+    updated: '2026-06-16',
+    highlights: [
+      'Interactive page-turn animations',
+      'Seven deadly sins illustrated',
+      'Witcher codex / bestiary aesthetic',
+      'Sound design + fullscreen mode',
+      'AI-illustrated, SF-conceived'
+    ]
+  },
+  {
     id: 'you-dont-have-to-use-your-brain',
     name: 'you-dont-have-to-use-your-brain',
     category: 'study',
@@ -707,6 +733,7 @@ const CATEGORIES = [
   { id: 'study',    label: 'Study' },
   { id: 'music',    label: 'Music' },
   { id: 'lab',      label: 'Lab' },
+  { id: 'art',      label: 'Art' },
 ];
 
 /* ═══════════════════════════════════════════════════════
@@ -720,6 +747,7 @@ const TILE_DATA = {
   'sip-and-spill':               { pages: 'https://littlebeansf.github.io/sip-and-spill/',                desc: 'Drinking game, escalating rounds' },
   'whoosit':                     { pages: 'https://littlebeansf.github.io/whoosit/',                    desc: 'Monster Guess Who?, P2P multiplayer' },
   'crucible-game':               { pages: 'https://littlebeansf.github.io/crucible-game/',               desc: 'Combine elements, unleash physics' },
+  'monstrarium':                 { pages: 'https://littlebeansf.github.io/monstrarium/',                 desc: 'Bestiary of the seven deadly sins' },
   'sunfinder':                   { pages: 'https://littlebeansf.github.io/sunfinder/',                    desc: 'Find the sun from where you are' },
   'currency-chaos':              { pages: 'https://littlebeansf.github.io/currency-chaos/',               desc: 'Convert anything into anything' },
   'framestack':                  { pages: 'https://littlebeansf.github.io/framestack/',                   desc: 'Track what you watch and read' },
@@ -901,6 +929,26 @@ const LOADERS = {
       }}
       animateDash(left,  200, 0, 260, onPage);
       animateDash(right, 200, 0, 260, onPage);
+    });
+  },
+
+  art: function(svg, done) {
+    // Paintbrush draws a diagonal stroke, then a square frame closes around it
+    svg.innerHTML = `
+      <line id="ll-stroke" x1="22" y1="58" x2="58" y2="22"
+        stroke-width="3" stroke-linecap="round"
+        stroke-dasharray="52" stroke-dashoffset="52"/>
+      <path id="ll-frame" d="M14,14 L66,14 L66,66 L14,66 Z"
+        stroke-width="2.2" fill="none"
+        stroke-dasharray="208" stroke-dashoffset="208"/>
+      <circle id="ll-dot" cx="58" cy="22" r="3.5"
+        stroke-width="0" opacity="0"/>
+    `;
+    animateDash(svg.getElementById('ll-stroke'), 52, 0, 280, function() {
+      var dot = svg.getElementById('ll-dot');
+      dot.setAttribute('opacity', '1');
+      dot.setAttribute('fill', 'currentColor');
+      animateDash(svg.getElementById('ll-frame'), 208, 0, 420, done);
     });
   },
 
