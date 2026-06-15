@@ -308,6 +308,26 @@ const PROJECTS = [
     ]
   },
   {
+    id: 'whoosit',
+    name: 'whoosit',
+    category: 'games',
+    categoryLabel: 'Game',
+    description: 'Weird multiplayer Guess Who? for 2–4 players. Flip monster tiles, ask twisted questions, unmask the creature — over WebRTC P2P, no install needed.',
+    github: 'https://github.com/littlebeansf/whoosit',
+    pages: 'https://littlebeansf.github.io/whoosit/',
+    image: 'img/whoosit.png',
+    language: 'JavaScript',
+    isPrivate: false,
+    updated: '2026-06-12',
+    highlights: [
+      '2–4 player WebRTC P2P multiplayer',
+      'Monster character board with flip animations',
+      'Play vs AI mode',
+      'Host & join with a code',
+      'No install, no account'
+    ]
+  },
+  {
     id: 'crucible-game',
     name: 'crucible-game',
     category: 'games',
@@ -698,6 +718,7 @@ const TILE_DATA = {
   'dealer-life-simulator':       { pages: 'https://littlebeansf.github.io/dealer-life-simulator/',        desc: 'A goblin deals your fate' },
   'it-clicker':                  { pages: 'https://littlebeansf.github.io/it-clicker/',                   desc: 'Survive the IT help desk' },
   'sip-and-spill':               { pages: 'https://littlebeansf.github.io/sip-and-spill/',                desc: 'Drinking game, escalating rounds' },
+  'whoosit':                     { pages: 'https://littlebeansf.github.io/whoosit/',                    desc: 'Monster Guess Who?, P2P multiplayer' },
   'crucible-game':               { pages: 'https://littlebeansf.github.io/crucible-game/',               desc: 'Combine elements, unleash physics' },
   'sunfinder':                   { pages: 'https://littlebeansf.github.io/sunfinder/',                    desc: 'Find the sun from where you are' },
   'currency-chaos':              { pages: 'https://littlebeansf.github.io/currency-chaos/',               desc: 'Convert anything into anything' },
