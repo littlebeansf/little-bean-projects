@@ -567,7 +567,7 @@ const PROJECTS = [
     name: 'monstrarium',
     category: 'art',
     categoryLabel: 'Art',
-    description: 'An interactive page-turning bestiary of the seven deadly sins — illustrated in Witcher-codex style, done by AI, conceived by SF.',
+    description: 'An interactive page-turning bestiary of 19 representations — sins, feelings, states of mind, each given a creature form and a codex entry. Illustrated in Witcher-codex style, done by AI, conceived by SF.',
     github: 'https://github.com/littlebeansf/monstrarium',
     pages: 'https://littlebeansf.github.io/monstrarium/',
     image: 'img/monstrarium.png',
@@ -575,10 +575,10 @@ const PROJECTS = [
     isPrivate: false,
     updated: '2026-06-16',
     highlights: [
-      'Interactive page-turn animations',
-      'Seven deadly sins illustrated',
+      '19 representations — sins, feelings, states of mind',
+      'Each creature illustrated with anatomy & lore',
+      'Interactive page-turn with sound design',
       'Witcher codex / bestiary aesthetic',
-      'Sound design + fullscreen mode',
       'AI-illustrated, SF-conceived'
     ]
   },
