@@ -24,6 +24,7 @@ const TRANSLATIONS = {
     cat_tools:        'Tools',
     cat_lab:          'Lab',
     cat_art:          'Art',
+    cat_friends:      'Friends & Family',
     cat_study:        'Study',
     cat_music:        'Music',
     all_projects:     'All_Projects',
@@ -64,6 +65,7 @@ const TRANSLATIONS = {
     acc_tools:    'Tools',
     acc_lab:      'Lab',
     acc_art:      'Art',
+    acc_friends:  'Friends & Family',
     acc_music:    'Music',
   },
   de: {
@@ -81,6 +83,7 @@ const TRANSLATIONS = {
     cat_tools:        'Werkzeuge',
     cat_lab:          'Lab',
     cat_art:          'Kunst',
+    cat_friends:      'Freunde & Familie',
     cat_study:        'Lernen',
     cat_music:        'Musik',
     all_projects:     'Alle_Projekte',
@@ -119,6 +122,7 @@ const TRANSLATIONS = {
     acc_tools:    'Werkzeuge',
     acc_lab:      'Lab',
     acc_art:      'Kunst',
+    acc_friends:  'Freunde & Familie',
     acc_music:    'Musik',
   },
   it: {
@@ -136,6 +140,7 @@ const TRANSLATIONS = {
     cat_tools:        'Strumenti',
     cat_lab:          'Lab',
     cat_art:          'Arte',
+    cat_friends:      'Amici & Famiglia',
     cat_study:        'Studio',
     cat_music:        'Musica',
     all_projects:     'Tutti_i_Progetti',
@@ -174,6 +179,7 @@ const TRANSLATIONS = {
     acc_tools:    'Strumenti',
     acc_lab:      'Lab',
     acc_art:      'Arte',
+    acc_friends:  'Amici & Famiglia',
     acc_music:    'Musica',
   }
 };
@@ -563,6 +569,61 @@ const PROJECTS = [
     ]
   },
   {
+    id: 'adagio',
+    name: 'adagio',
+    category: 'friends',
+    categoryLabel: 'Friends & Family',
+    description: 'Website for Adagio Locale Speciale — a special restaurant near Fano in the Marche region. Slow food, local ingredients, a place worth the detour.',
+    github: null,
+    pages: 'https://www.adagiolocalespeciale.com/',
+    image: 'img/adagio.png',
+    language: null,
+    isPrivate: false,
+    updated: '2026-06-18',
+    highlights: [
+      'Special local restaurant near Fano, Marche',
+      'Slow food & local ingredients',
+      'Menu, about & location pages',
+      'Mobile-friendly design'
+    ]
+  },
+  {
+    id: 'nova-energia',
+    name: 'nova-energia',
+    category: 'friends',
+    categoryLabel: 'Friends & Family',
+    description: 'Website for Nova Energia Srl — a construction & industrial energy company. Steel structures, cranes, heavy works, built from the ground up.',
+    github: null,
+    pages: 'https://www.novaenergiasrl.it/',
+    image: 'img/nova-energia.png',
+    language: null,
+    isPrivate: false,
+    updated: '2026-06-18',
+    highlights: [
+      'Industrial construction company site',
+      'Services, fleet & contact pages',
+      'Italian-language, mobile-friendly'
+    ]
+  },
+  {
+    id: 'giacomo-longo',
+    name: 'giacomo-longo',
+    category: 'friends',
+    categoryLabel: 'Friends & Family',
+    description: 'Personal site for Giacomo Longo, walking all of Italy on foot via Sentiero Italia CAI — ~8,000 km, one step at a time. Journey tracker, blog & progress.',
+    github: null,
+    pages: 'https://www.giacomolongo.com/',
+    image: 'img/giacomo-longo.png',
+    language: null,
+    isPrivate: false,
+    updated: '2026-06-18',
+    highlights: [
+      'Sentiero Italia CAI — ~8,000 km on foot',
+      'Live journey tracker & blog',
+      'In cammino dal 16.02.2026'
+    ]
+  },
+  {
     id: 'monstrarium',
     name: 'monstrarium',
     category: 'art',
@@ -734,6 +795,7 @@ const CATEGORIES = [
   { id: 'music',    label: 'Music' },
   { id: 'lab',      label: 'Lab' },
   { id: 'art',      label: 'Art' },
+  { id: 'friends',  label: 'Friends & Family' },
 ];
 
 /* ═══════════════════════════════════════════════════════
@@ -748,6 +810,9 @@ const TILE_DATA = {
   'whoosit':                     { pages: 'https://littlebeansf.github.io/whoosit/',                    desc: 'Monster Guess Who?, P2P multiplayer' },
   'crucible-game':               { pages: 'https://littlebeansf.github.io/crucible-game/',               desc: 'Combine elements, unleash physics' },
   'monstrarium':                 { pages: 'https://littlebeansf.github.io/monstrarium/',                 desc: 'Bestiary of the seven deadly sins' },
+  'adagio':                      { pages: 'https://www.adagiolocalespeciale.com/',                       desc: 'Restaurant near Fano, Marche' },
+  'nova-energia':                { pages: 'https://www.novaenergiasrl.it/',                             desc: 'Industrial construction company' },
+  'giacomo-longo':               { pages: 'https://www.giacomolongo.com/',                              desc: '8,000 km across Italy on foot' },
   'sunfinder':                   { pages: 'https://littlebeansf.github.io/sunfinder/',                    desc: 'Find the sun from where you are' },
   'currency-chaos':              { pages: 'https://littlebeansf.github.io/currency-chaos/',               desc: 'Convert anything into anything' },
   'framestack':                  { pages: 'https://littlebeansf.github.io/framestack/',                   desc: 'Track what you watch and read' },
@@ -930,6 +995,31 @@ const LOADERS = {
       animateDash(left,  200, 0, 260, onPage);
       animateDash(right, 200, 0, 260, onPage);
     });
+  },
+
+  friends: function(svg, done) {
+    // Two small figures walk toward each other, then a heart appears between them
+    svg.innerHTML = `
+      <circle id="ll-f1" cx="18" cy="36" r="5"
+        fill="none" stroke-width="2.2" stroke-dasharray="32" stroke-dashoffset="32" opacity="0"/>
+      <line id="ll-b1" x1="18" y1="41" x2="18" y2="56"
+        stroke-width="2.2" stroke-dasharray="15" stroke-dashoffset="15" opacity="0"/>
+      <circle id="ll-f2" cx="62" cy="36" r="5"
+        fill="none" stroke-width="2.2" stroke-dasharray="32" stroke-dashoffset="32" opacity="0"/>
+      <line id="ll-b2" x1="62" y1="41" x2="62" y2="56"
+        stroke-width="2.2" stroke-dasharray="15" stroke-dashoffset="15" opacity="0"/>
+      <path id="ll-heart" d="M40,52 C40,52 28,44 28,37 C28,32 33,29 37,32 L40,35 L43,32 C47,29 52,32 52,37 C52,44 40,52 40,52 Z"
+        fill="none" stroke-width="2" stroke-dasharray="60" stroke-dashoffset="60" opacity="0"/>
+    `;
+    var f1 = svg.getElementById('ll-f1'), b1 = svg.getElementById('ll-b1');
+    var f2 = svg.getElementById('ll-f2'), b2 = svg.getElementById('ll-b2');
+    var heart = svg.getElementById('ll-heart');
+    f1.setAttribute('opacity','1'); f2.setAttribute('opacity','1');
+    animateDash(f1, 32, 0, 200, function() { animateDash(b1, 15, 0, 150, null); });
+    animateDash(f2, 32, 0, 200, function() { animateDash(b2, 15, 0, 150, function() {
+      heart.setAttribute('opacity','1');
+      animateDash(heart, 60, 0, 350, done);
+    }); });
   },
 
   art: function(svg, done) {
